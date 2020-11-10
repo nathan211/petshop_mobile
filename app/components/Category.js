@@ -1,77 +1,30 @@
-import React, { useRef } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-
-
 import colors from '../config/colors'
+import Text from './Text';
 
 export default function Category() {
-    const scrollView = useRef();
-
     return (
-        <View style={styles.categoryContainer}>
-            <Text style={styles.categoryTitle}>Danh mục</Text>
-            <ScrollView 
-                ref={scrollView}
-                style={styles.iconContainer}
-                horizontal
-                onContentSizeChange={() => scrollView.current.scrollToEnd()}
-            >
-                <View style={styles.backgroundIcon}>
-                    <Icon
-                        name='paw'
-                        size={40}
-                        color={colors.purple}
-                    />
-                </View>
-                <View style={styles.backgroundIcon}>
-                    <Icon
-                        name='paw'
-                        size={40}
-                        color={colors.purple}
-                    />
-                </View>
-                <View style={styles.backgroundIcon}>
-                    <Icon
-                        name='paw'
-                        size={40}
-                        color={colors.purple}
-                    />
-                </View>
-                <View style={styles.backgroundIcon}>
-                    <Icon
-                        name='paw'
-                        size={40}
-                        color={colors.purple}
-                    />
-                </View>
-                <View style={styles.backgroundIcon}>
-                    <Icon
-                        name='paw'
-                        size={40}
-                        color={colors.purple}
-                    />
-                </View>
-            </ScrollView>
-        </View>
+        <View style={styles.container}>            
+            <View style={styles.backgroundIcon}>
+                <Icon
+                    name='paw'
+                    size={40}
+                    color={colors.purple}
+                />
+            </View>
+            <Text customStyle={styles.categoryTitle}>Thức ăn</Text>
+        </View>       
     )
 }
 
-const styles = StyleSheet.create({
-    categoryContainer: {
-        paddingVertical: 15,
-    },
-    categoryTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.dark,
-       
-    },
-    iconContainer: {
-        flexDirection: 'row',
-        paddingVertical: 10,
-        marginTop: 5
+const styles = StyleSheet.create({    
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 7,
     },
     backgroundIcon: {
         width: 70,
@@ -84,6 +37,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 1.00,
         elevation: 5,
-        marginRight: 15
     },
+    categoryTitle: {
+        fontSize: 16,
+        marginTop: 5
+    }
 })

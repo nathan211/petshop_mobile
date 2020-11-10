@@ -6,6 +6,7 @@ import colors from '../config/colors'
 import CumulativePoints from '../components/CumulativePoints'
 import Chatting from '../components/Chatting'
 import Category from '../components/Category'
+import Card from '../components/Card'
 import SearchBar from '../components/SearchBar'
 import ShoppingCart from '../components/ShoppingCart'
 
@@ -19,7 +20,36 @@ export default function HomeScreen() {
             </View>
             <View style={styles.content}>
                 <CumulativePoints />
-                <Category />
+                <View style={styles.categoryContainer}>
+                    <Text style={styles.categoryTitle}>Danh mục</Text>
+                    <ScrollView 
+                        style={styles.iconContainer}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        <Category />
+                        <Category />
+                        <Category />
+                        <Category />
+                        <Category />
+                        <Category />
+                        <Category />
+                        <Category />
+                    </ScrollView>
+                </View>
+                <View style={styles.featureProductContainer}>
+                    <Text style={styles.categoryTitle}>Sản phẩm nỗi bật</Text>
+                    <ScrollView 
+                        style={styles.iconContainer}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                    </ScrollView>
+                </View>
             </View>
         </ScrollView>
     )
@@ -37,5 +67,17 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 15,
+    },
+    categoryContainer: {
+        marginTop: 15,
+    },
+    categoryTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: colors.dark,
+    },
+    iconContainer: {
+        flexDirection: 'row',
+        paddingVertical: 10,
     },
 })
