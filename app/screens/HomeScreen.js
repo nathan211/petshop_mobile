@@ -1,12 +1,40 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
+
+import colors from '../config/colors'
+import CumulativePoints from '../components/CumulativePoints';
+import Chatting from '../components/Chatting'
+import SearchBar from '../components/SearchBar'
+import ShoppingCart from '../components/ShoppingCart'
 
 export default function HomeScreen() {
     return (
-        <View>
-            <Text>Home</Text>
-        </View>
+        <ScrollView>
+            <View style={styles.header}>
+                <SearchBar customStyle={styles.customStyle} />
+                <ShoppingCart onPress={() => console.log('go to shopping cart')} />
+                <Chatting onPress={() => console.log('go to chatting')} />
+            </View>
+            <View style={styles.content}>
+                <CumulativePoints />
+                
+            </View>
+        </ScrollView>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    header: {
+        height: 100,
+        flexDirection: 'row',
+        backgroundColor: colors.pink,
+        padding: 10
+    },
+    customStyle: {
+        flex: 1,
+
+    },
+    content: {
+        padding: 15,
+    },
+})

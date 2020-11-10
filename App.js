@@ -11,19 +11,18 @@ import {
   StyleSheet
 } from 'react-native';
 
-
-import LoginScreen from './app/screens/LoginScreen';
 import HomeScreen from './app/screens/HomeScreen';
 import SplashScreen from 'react-native-splash-screen';
+import LoginScreen from './app/screens/LoginScreen';
 
 const App: () => React$Node = () => {
 
   useEffect(() => {
     SplashScreen.hide();
-  });
+  }, []);
 
   return (
-    <LoginScreen /> 
+    <HomeScreen /> 
   );
 };
 

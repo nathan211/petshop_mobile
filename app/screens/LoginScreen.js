@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { StyleSheet, Image, View } from 'react-native';
 import * as Yup from 'yup';
 
-import Screen from '../components/Screen';
 import colors from '../config/colors';
-import { Form, SubmitButton, ErrorMessage } from '../components/forms';
-import FormField from '../components/forms/FormField';
+import Screen from '../components/Screen';
+import { Form, FormField, SubmitButton, ErrorMessage } from '../components/forms';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
@@ -26,15 +25,15 @@ export default function LoginScreen() {
             <View style={styles.logoContainer}>
                 <Image style={styles.image} source={require('../assets/images/logopetshop.png')}/>
             </View>
-            <ErrorMessage 
-                visible={loginFailed}
-                error="Email hoặc mật khẩu không chính xác!"
-            />
             <Form 
                 initialValues={{email: '', password: ''}}
                 validationShema={validationSchema}
                 onSubmit={handleSubmit}
             >
+                <ErrorMessage 
+                    visible={loginFailed}
+                    error="Email hoặc mật khẩu không chính xác!"
+                />
                 <FormField 
                     autoCorrect={false}
                     autoCapitalize='none'
