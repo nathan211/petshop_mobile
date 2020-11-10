@@ -14,18 +14,23 @@ export default function CumulativePoints({cutomContainerStyle}) {
                     source={require('../assets/images/profile.jpg')}
                     style={styles.image}
                 />
-                <Text customStyle={styles.name}>Tus</Text>
+                <Text 
+                    customStyle={styles.name}
+                    numberOfLines={1}
+                >
+                    Hoàng
+                </Text>
             </View>
             <View style={styles.separator} />
             <View style={styles.pointContainer}>
-                <View style={styles.background}>
-                    <Icon 
-                        name='user'
-                        size={20}
-                        color='red'
-                    />
-                </View>
-                <Text>123456</Text>
+                <Icon 
+                    name='credit-card'
+                    size={30}
+                    color={colors.medium}
+                    style={styles.icon}
+                />
+                <Text customStyle={styles.point}>1234567</Text>
+                <Text customStyle={styles.text}>điểm</Text>
             </View>
         </View>
     )
@@ -59,25 +64,27 @@ const styles = StyleSheet.create({
     },
     name: {
         marginLeft: 10,
+        width: 100
     },
     pointContainer: {
         flex: 1/2,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         paddingLeft: 10
     },
     point: {
         color: colors.red,
         fontWeight: 'bold',
+        marginHorizontal: 5
     },
-    background: {
-        width: 50,
-        height: 50,
-        backgroundColor: colors.light,
-        borderRadius: 25,
-        marginRight: 10,
-        justifyContent: 'center',
-        alignItems: 'center'
+    text: {
+        fontSize: 14,
+        marginLeft: 5,
+        textDecorationLine: 'underline'
+    },
+    icon: {
+        marginRight: 5,
     },
     separator: {
         width: 1,

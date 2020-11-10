@@ -1,9 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 
+
 import colors from '../config/colors'
-import CumulativePoints from '../components/CumulativePoints';
+import CumulativePoints from '../components/CumulativePoints'
 import Chatting from '../components/Chatting'
+import Category from '../components/Category'
 import SearchBar from '../components/SearchBar'
 import ShoppingCart from '../components/ShoppingCart'
 
@@ -17,7 +19,7 @@ export default function HomeScreen() {
             </View>
             <View style={styles.content}>
                 <CumulativePoints />
-                
+                <Category />
             </View>
         </ScrollView>
     )
@@ -32,7 +34,6 @@ const styles = StyleSheet.create({
     },
     customStyle: {
         flex: 1,
-
     },
     content: {
         padding: 15,
