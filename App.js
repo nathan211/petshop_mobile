@@ -6,14 +6,16 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from 'react';
+import 'react-native-gesture-handler';
+import React, { useEffect } from 'react'
 import {
   StyleSheet
-} from 'react-native';
+} from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
 
-import HomeScreen from './app/screens/HomeScreen';
-import SplashScreen from 'react-native-splash-screen';
-import LoginScreen from './app/screens/LoginScreen';
+import SplashScreen from 'react-native-splash-screen'
+import AppNavigator from './app/navigation/AppNavigator'
+import navigationTheme from './app/navigation/navigationTheme'
 
 const App: () => React$Node = () => {
 
@@ -22,12 +24,10 @@ const App: () => React$Node = () => {
   }, []);
 
   return (
-    <HomeScreen /> 
+    <NavigationContainer theme={navigationTheme}>
+      <AppNavigator />
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-
-});
 
 export default App;

@@ -44,10 +44,12 @@ export default function HomeScreen() {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                     >
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
+                        <Card title='Product name here' subTitle={123456} />
+                        <Card title='Product name here' subTitle={123456} />
+                        <Card title='Product name here' subTitle={123456} />
+                        <Card title='Product name here' subTitle={123456} />
+                        <Card title='Product name here' subTitle={123456} />
+                        <Card title='Product name here' subTitle={123456} />
                     </ScrollView>
                 </View>
             </View>

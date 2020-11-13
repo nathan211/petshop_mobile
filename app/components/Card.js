@@ -1,13 +1,17 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 
 import colors from '../config/colors'
 import Text from './Text'
 
-export default function Card() {
+export default function Card({ image, title, subTitle }) {
     return (
         <View style={styles.container}>
-            <Text>Card</Text>
+            <Image style={styles.image} source={require('../assets/images/product.jpg')} />
+            <View style={styles.titleContainer}>
+                <Text numberOfLines={1} customStyle={styles.title}>{title}</Text>
+                <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>
+            </View>
         </View>
     )
 }
@@ -15,15 +19,29 @@ export default function Card() {
 const styles = StyleSheet.create({
     container: {
         width: 140,
-        height: 180,
+        height: 200,
         backgroundColor: colors.white,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowRadius: 1.00,
+        borderRadius: 5,
         elevation: 5,
-        margin: 10
+        marginVertical: 10,
+        marginHorizontal: 5,
+        overflow: 'hidden'
+    },
+    image: {
+        width: '100%',
+        height: '75%',
+    },
+    titleContainer: {
+        paddingHorizontal: 5,
+        width: '100%',
+    },
+    title: {
+        fontSize: 16,
+        width: '100%',
+    },
+    subTitle: {
+        color: colors.red,
+        fontWeight: 'bold',
+        width: '100%',
     }
 })

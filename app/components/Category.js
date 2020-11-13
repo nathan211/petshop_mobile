@@ -33,9 +33,6 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "#000",
-        shadowOpacity: 0.5,
-        shadowRadius: 1.00,
         elevation: 5,
     },
     categoryTitle: {
