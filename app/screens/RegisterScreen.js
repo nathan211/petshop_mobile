@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { StyleSheet, Image, View, ScrollView } from 'react-native';
 import * as Yup from 'yup';
 
+import customerApi from '../api/customer';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { Form, FormField, SubmitButton, ErrorMessage } from '../components/forms';
@@ -19,13 +20,16 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
     const [registerFailed, setRegisterFailed] = useState(false);
 
-    const handleSubmit = ({fullName, address, phoneNumber, email, password, confirmPassword}) => {
-        console.log('Submitted');
-        console.log(fullName, address, phoneNumber, email, password);
-        setRegisterFailed(true);
+    const handleSubmit = async ({fullName, address, phoneNumber, email, password}) => {
+        const result = await customerApi.register(fullName, address, phoneNumber, email, password);
+
+        if(!result.ok) return setRegisterFailed(true);
+
+        setRegisterFailed(false);
+        console.log(result.data);
     }
 
     return (
@@ -117,13 +121,13 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         alignItems: 'center',
-        marginBottom: 15,
+        marginVertical: 10,
     },
     image: {
         backgroundColor: colors.light,
-        width: 120,
-        height: 120,
-        borderRadius: 75
+        width: 100,
+        height: 100,
+        borderRadius: 50
     },
 })
 

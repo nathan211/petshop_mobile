@@ -15,9 +15,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import SplashScreen from 'react-native-splash-screen';
 import AppNavigator from './app/navigation/AppNavigator';
+import AuthNavigator from './app/navigation/AuthNavigator';
 import navigationTheme from './app/navigation/navigationTheme';
-import LoginScreen from './app/screens/LoginScreen';
-import RegisterScreen from './app/screens/RegisterScreen';
 
 const App: () => React$Node = () => {
 
@@ -26,10 +25,9 @@ const App: () => React$Node = () => {
   }, []);
 
   return (
-    // <NavigationContainer theme={navigationTheme}>
-    //   <AppNavigator />
-    // </NavigationContainer>
-    <RegisterScreen />
+    <NavigationContainer theme={navigationTheme}>
+      <AppNavigator />
+    </NavigationContainer>
   );
 };
 

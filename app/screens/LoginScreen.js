@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, View } from 'react-native';
 import * as Yup from 'yup';
+import jwtDecode from 'jwt-decode';
 
+import authApi from '../api/auth';
 import colors from '../config/colors';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
@@ -13,13 +15,17 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
 });
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
     const [loginFailed, setLoginFailed] = useState(false);
 
-    const handleSubmit = ({email, password}) => {
-        console.log('Submitted');
-        console.log({email, password});
-        setLoginFailed(true);
+    const handleSubmit = async ({email, password}) => {
+        const result = await authApi.login(email, password);
+        
+        if(!result.ok) return setLoginFailed(true);
+
+        setLoginFailed(false);
+        const customer = jwtDecode(result.data);
+        console.log(customer.info);    
     }
 
     return (
@@ -61,7 +67,7 @@ export default function LoginScreen() {
                 </View>
                 <Button 
                     title='đăng ký' 
-                    onPress={() => console.log('go to register')}
+                    onPress={() => navigation.navigate('Register')}
                     color='dark'
                     customStyleTitle={styles.customStyleTitle}
                 />
@@ -84,8 +90,8 @@ const styles = StyleSheet.create({
     },
     image: {
         backgroundColor: colors.light,
-        width: 150,
-        height: 150,
+        width: 100,
+        height: 100,
         borderRadius: 75
     },
     or: {
