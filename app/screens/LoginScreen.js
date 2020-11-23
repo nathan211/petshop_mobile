@@ -3,7 +3,9 @@ import { StyleSheet, Image, View } from 'react-native';
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
+import Button from '../components/Button';
 import Screen from '../components/Screen';
+import Text from '../components/Text';
 import { Form, FormField, SubmitButton, ErrorMessage } from '../components/forms';
 
 const validationSchema = Yup.object().shape({
@@ -23,7 +25,7 @@ export default function LoginScreen() {
     return (
         <Screen style={styles.container}>
             <View style={styles.logoContainer}>
-                <Image style={styles.image} source={require('../assets/images/logopetshop.png')}/>
+                <Image style={styles.image} source={require('../assets/images/paw.png')}/>
             </View>
             <Form 
                 initialValues={{email: '', password: ''}}
@@ -53,6 +55,16 @@ export default function LoginScreen() {
                     secureTextEntry
                 />
                 <SubmitButton title='đăng nhập'/>
+                <View style={styles.separatorContainer}>
+                    <Text customStyle={styles.or}>Hoặc</Text>
+                    <View style={styles.line} />
+                </View>
+                <Button 
+                    title='đăng ký' 
+                    onPress={() => console.log('go to register')}
+                    color='dark'
+                    customStyleTitle={styles.customStyleTitle}
+                />
             </Form>
         </Screen>
     )
@@ -60,19 +72,38 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        padding: 25,
         backgroundColor: colors.pink,
+    },
+    customStyleTitle: {
+        color: colors.light
     },
     logoContainer: {
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 20,
     },
     image: {
+        backgroundColor: colors.light,
         width: 150,
-        height: 150
+        height: 150,
+        borderRadius: 75
     },
-    fb: {
-        margin: 0,
-        marginVertical: 10,
+    or: {
+        alignSelf: 'center', 
+        color: colors.black,
+        marginBottom: -10,
+        paddingHorizontal: 5,
+        zIndex: 1,
+        backgroundColor: colors.pink,
+        fontSize: 14
+    },
+    line: {
+        alignSelf: 'center', 
+        width: '70%',
+        height: 1,
+        backgroundColor: colors.dark,
+    },
+    separatorContainer: {
+        marginBottom: 10
     }
 })

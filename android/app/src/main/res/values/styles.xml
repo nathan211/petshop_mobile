@@ -16,8 +16,7 @@
     <!-- Adds the splash screen definition -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">@color/splashscreen_bg</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
     </style>
 </resources>

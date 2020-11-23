@@ -12,7 +12,7 @@ import ShoppingCart from '../components/ShoppingCart'
 
 export default function HomeScreen() {
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <SearchBar customStyle={styles.customStyle} />
                 <ShoppingCart onPress={() => console.log('go to shopping cart')} />
@@ -58,6 +58,9 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FFF8F8',
+    },
     header: {
         height: 100,
         flexDirection: 'row',
