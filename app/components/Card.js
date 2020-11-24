@@ -4,12 +4,17 @@ import { StyleSheet, View, Image } from 'react-native'
 import colors from '../config/colors'
 import Text from './Text'
 
-export default function Card({ image, title, subTitle }) {
+export default function Card({ 
+        image,
+        title, 
+        subTitle, 
+        customContainerStyle,
+        customTitleStyle }) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, customContainerStyle]}>
             <Image style={styles.image} source={require('../assets/images/product.jpg')} />
             <View style={styles.titleContainer}>
-                <Text numberOfLines={1} customStyle={styles.title}>{title}</Text>
+                <Text numberOfLines={2} customStyle={[styles.title, customTitleStyle]}>{title}</Text>
                 <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>
             </View>
         </View>
@@ -18,8 +23,8 @@ export default function Card({ image, title, subTitle }) {
 
 const styles = StyleSheet.create({
     container: {
-        width: 140,
-        height: 200,
+        width: 150,
+        height: 220,
         backgroundColor: colors.white,
         borderRadius: 5,
         elevation: 5,
@@ -32,11 +37,11 @@ const styles = StyleSheet.create({
         height: '75%',
     },
     titleContainer: {
-        paddingHorizontal: 5,
+        padding: 5,
         width: '100%',
     },
     title: {
-        fontSize: 16,
+        fontSize: 13,
         width: '100%',
     },
     subTitle: {

@@ -27,14 +27,26 @@ export default function HomeScreen() {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                     >
-                        <Category />
-                        <Category />
-                        <Category />
-                        <Category />
-                        <Category />
-                        <Category />
-                        <Category />
-                        <Category />
+                        <Category 
+                            icon='paw' 
+                            title='Thức ăn'
+                        />
+                        <Category 
+                            icon='paw' 
+                            title='Thức ăn'
+                        />
+                        <Category 
+                            icon='paw' 
+                            title='Thức ăn'
+                        />
+                        <Category 
+                            icon='paw' 
+                            title='Thức ăn'
+                        />
+                        <Category 
+                            icon='paw' 
+                            title='Thức ăn'
+                        />
                     </ScrollView>
                 </View>
                 <View style={styles.featureProductContainer}>
@@ -59,7 +71,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF8F8',
+        backgroundColor: colors.lightPink,
     },
     header: {
         height: 100,

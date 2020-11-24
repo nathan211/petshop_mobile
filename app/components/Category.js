@@ -5,17 +5,23 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import colors from '../config/colors'
 import Text from './Text';
 
-export default function Category() {
+export default function Category({ 
+        customContainerStyle, 
+        customTitleStyle, 
+        customIconContainer, 
+        icon,
+        iconColor='#803C6D',
+        title }) {
     return (
-        <View style={styles.container}>            
-            <View style={styles.backgroundIcon}>
+        <View style={[styles.container, customContainerStyle]}>            
+            <View style={[styles.iconContainer, customIconContainer]}>
                 <Icon
-                    name='paw'
-                    size={40}
-                    color={colors.purple}
+                    name={icon}
+                    size={30}
+                    color={iconColor}
                 />
             </View>
-            <Text customStyle={styles.categoryTitle}>Thức ăn</Text>
+            <Text customStyle={[styles.categoryTitle, customTitleStyle]}>{title}</Text>
         </View>       
     )
 }
@@ -26,7 +32,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         margin: 7,
     },
-    backgroundIcon: {
+    iconContainer: {
         width: 70,
         height: 70,
         backgroundColor: colors.white,
