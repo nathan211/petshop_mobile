@@ -7,6 +7,7 @@ import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Setting from '../components/Setting';
 import Text from '../components/Text';
+import ListItem from '../components/ListItem';
 
 export default function SearchScreen() {
     return (
@@ -26,11 +27,35 @@ export default function SearchScreen() {
                         containerStyle={styles.avatar}
                         rounded
                     />
-                    <Text>Nguyễn Việt Phi</Text>
+                    <View style={styles.accountContainer}>
+                        <Text style={styles.fullName}>Nguyễn Việt Phi</Text>
+                        <Text style={styles.email}>fi@gmail.com</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.content}>
-                <Text>Quản lý đơn hàng</Text>
+                <ListItem 
+                    title='Thông tin tài khoản' 
+                    leftIcon='id-card-o' 
+                    leftIconColor={colors.brown}
+                    rightIcon='chevron-right'
+                    rightIconColor={colors.brown}
+                    onPress={() => console.log('work')}
+                />
+                <ListItem 
+                    title='Quản lý đơn hàng' 
+                    leftIcon='list-alt' 
+                    leftIconColor={colors.brown}
+                    rightIcon='chevron-right'
+                    rightIconColor={colors.brown}
+                    onPress={() => console.log('work')}
+                />
+                <ListItem 
+                    title='Đăng xuất' 
+                    leftIcon='sign-out' 
+                    leftIconColor={colors.brown}
+                    onPress={() => console.log('work')}
+                />
             </View>
         </View>
     )
@@ -47,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content: {
-        padding: 10
+        marginTop: 5
     },
     utils: {
         flexDirection: 'row',
@@ -61,5 +86,14 @@ const styles = StyleSheet.create({
     avatar: {
         backgroundColor: colors.primary,
         marginRight: 10
+    },
+    fullName: {
+        textTransform: 'uppercase',
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: 18
+    },
+    email: {
+        color: colors.white
     }
 });

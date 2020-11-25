@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 export default function AuthNavigator() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
             <Stack.Screen 
                 name="Login" 
                 component={LoginScreen} 
@@ -20,18 +20,18 @@ export default function AuthNavigator() {
             <Stack.Screen 
                 name="Register" 
                 component={RegisterScreen} 
-                options={{
-                    title: 'Đăng ký',
-                    headerStyle: {
-                      backgroundColor: colors.pink,
-                      elevation: 0
-                    },
-                    headerTintColor: colors.white,
-                    headerTitleStyle: {
-                      fontWeight: 'bold',
-                    },
-                    headerTitleAlign: 'center'
-                }}
+                // options={{
+                //     title: 'Đăng ký',
+                //     headerStyle: {
+                //       backgroundColor: colors.pink,
+                //       elevation: 0
+                //     },
+                //     headerTintColor: colors.white,
+                //     headerTitleStyle: {
+                //       fontWeight: 'bold',
+                //     },
+                //     headerTitleAlign: 'center'
+                // }}
             />
       </Stack.Navigator>
     )

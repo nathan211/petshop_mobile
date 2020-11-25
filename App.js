@@ -26,9 +26,10 @@ const App: () => React$Node = () => {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
+      <AuthNavigator />
     </NavigationContainer>
   );
 };
+
 
 export default App;
