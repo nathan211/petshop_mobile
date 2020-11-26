@@ -1,6 +1,5 @@
-import React from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
-
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
 
 import colors from '../config/colors'
 import CumulativePoints from '../components/CumulativePoints'
@@ -9,13 +8,32 @@ import Category from '../components/Category'
 import Card from '../components/Card'
 import SearchBar from '../components/SearchBar'
 import ShoppingCart from '../components/ShoppingCart'
+import productApi from '../api/product';
 
 export default function HomeScreen() {
+    const [listOfProducts, setListOfProducts] = useState([]);
+
+    const getListOfProducts = async () => {
+        const result = await productApi.getListOfProducts();
+        console.log(result.data);
+        setListOfProducts(result.data);
+    }
+
+    useEffect(() => {
+        getListOfProducts();
+    }, []);
+
+    const renderItem = ({item}) => {
+        return (
+            <Card title={item.name} subTitle={item.price} />
+        );
+    };
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <SearchBar customStyle={styles.customStyle} />
-                <ShoppingCart onPress={() => console.log('go to shopping cart')} />
+                <ShoppingCart onPress={() => getListOfProducts()} />
                 <Chatting onPress={() => console.log('go to chatting')} />
             </View>
             <View style={styles.content}>
@@ -51,18 +69,14 @@ export default function HomeScreen() {
                 </View>
                 <View style={styles.featureProductContainer}>
                     <Text style={styles.categoryTitle}>Sản phẩm nỗi bật</Text>
-                    <ScrollView 
-                        style={styles.iconContainer}
+                    <FlatList 
+                        style={styles.cardContainer}
                         horizontal
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        <Card title='Product name here' subTitle={123456} />
-                        <Card title='Product name here' subTitle={123456} />
-                        <Card title='Product name here' subTitle={123456} />
-                        <Card title='Product name here' subTitle={123456} />
-                        <Card title='Product name here' subTitle={123456} />
-                        <Card title='Product name here' subTitle={123456} />
-                    </ScrollView>
+                        //showsHorizontalScrollIndicator={false}
+                        data={listOfProducts}
+                        keyExtractor={product => product._id.toString()}
+                        renderItem={renderItem}
+                    />
                 </View>
             </View>
         </ScrollView>
@@ -94,7 +108,9 @@ const styles = StyleSheet.create({
         color: colors.dark,
     },
     iconContainer: {
-        flexDirection: 'row',
+        paddingVertical: 10,
+    },
+    cardContainer: {
         paddingVertical: 10,
     },
 })

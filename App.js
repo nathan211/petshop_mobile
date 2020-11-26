@@ -26,7 +26,7 @@ const App: () => React$Node = () => {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 };

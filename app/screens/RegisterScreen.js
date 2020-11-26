@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         alignItems: 'center',
-        marginVertical: 10,
+        marginBottom: 10,
     },
     image: {
         backgroundColor: colors.light,
