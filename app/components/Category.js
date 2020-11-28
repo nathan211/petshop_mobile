@@ -21,7 +21,12 @@ export default function Category({
                     color={iconColor}
                 />
             </View>
-            <Text customStyle={[styles.categoryTitle, customTitleStyle]}>{title}</Text>
+            <Text 
+                customStyle={[styles.categoryTitle, customTitleStyle]}
+                numberOfLines={1}
+            >
+                {title}
+            </Text>
         </View>       
     )
 }
@@ -42,7 +47,9 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     categoryTitle: {
-        fontSize: 16,
-        marginTop: 5
-    }
+        fontSize: 14,
+        marginTop: 5,
+        width: 90,
+        textAlign: 'center'
+    },
 })

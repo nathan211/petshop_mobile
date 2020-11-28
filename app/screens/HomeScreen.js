@@ -1,33 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native';
 
-import colors from '../config/colors'
-import CumulativePoints from '../components/CumulativePoints'
-import Chatting from '../components/Chatting'
-import Category from '../components/Category'
-import Card from '../components/Card'
-import SearchBar from '../components/SearchBar'
-import ShoppingCart from '../components/ShoppingCart'
+import colors from '../config/colors';
+import CumulativePoints from '../components/CumulativePoints';
+import Chatting from '../components/Chatting';
+import Category from '../components/Category';
+import Card from '../components/Card';
+import SearchBar from '../components/SearchBar';
+import ShoppingCart from '../components/ShoppingCart';
 import productApi from '../api/product';
+import categoryApi from '../api/category';
 
 export default function HomeScreen() {
     const [listOfProducts, setListOfProducts] = useState([]);
+    const [listOfCategories, setListOfCategories] = useState([]);
 
     const getListOfProducts = async () => {
-        const result = await productApi.getListOfProducts();
-        console.log(result.data);
-        setListOfProducts(result.data);
+        try {
+            const result = await productApi.getListOfProducts();
+            setListOfProducts(result.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getListOfCategories = async () => {
+        try {
+            const result = await categoryApi.getListOfCategories();
+            setListOfCategories(result.data);
+            console.log(result.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
         getListOfProducts();
+        getListOfCategories();
     }, []);
-
-    const renderItem = ({item}) => {
-        return (
-            <Card title={item.name} subTitle={item.price} />
-        );
-    };
 
     return (
         <ScrollView style={styles.container}>
@@ -39,43 +49,42 @@ export default function HomeScreen() {
             <View style={styles.content}>
                 <CumulativePoints />
                 <View style={styles.categoryContainer}>
-                    <Text style={styles.categoryTitle}>Danh mục</Text>
-                    <ScrollView 
+                    <Text style={styles.title}>Danh mục</Text>
+                    {/* <ScrollView 
                         style={styles.iconContainer}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                     >
                         <Category 
                             icon='paw' 
-                            title='Thức ăn'
+                            title='Thức ăn cho chó'
                         />
-                        <Category 
-                            icon='paw' 
-                            title='Thức ăn'
-                        />
-                        <Category 
-                            icon='paw' 
-                            title='Thức ăn'
-                        />
-                        <Category 
-                            icon='paw' 
-                            title='Thức ăn'
-                        />
-                        <Category 
-                            icon='paw' 
-                            title='Thức ăn'
-                        />
-                    </ScrollView>
+                    </ScrollView> */}
+                    <FlatList 
+                        style={styles.iconContainer}
+                        horizontal
+                        data={listOfCategories}
+                        keyExtractor={item => item._id.toString()}
+                        renderItem={({item}) => {
+                            return (
+                                <Category title={item.name} icon='paw' />
+                            );
+                        }}
+                    />
                 </View>
                 <View style={styles.featureProductContainer}>
-                    <Text style={styles.categoryTitle}>Sản phẩm nỗi bật</Text>
+                    <Text style={styles.title}>Sản phẩm nỗi bật</Text>
                     <FlatList 
                         style={styles.cardContainer}
                         horizontal
                         //showsHorizontalScrollIndicator={false}
                         data={listOfProducts}
-                        keyExtractor={product => product._id.toString()}
-                        renderItem={renderItem}
+                        keyExtractor={item => item._id.toString()}
+                        renderItem={({item}) => {
+                            return (
+                                <Card title={item.name} subTitle={item.price} />
+                            );
+                        }}
                     />
                 </View>
             </View>
@@ -102,15 +111,18 @@ const styles = StyleSheet.create({
     categoryContainer: {
         marginTop: 15,
     },
-    categoryTitle: {
+    title: {
         fontSize: 20,
         fontWeight: 'bold',
         color: colors.dark,
     },
     iconContainer: {
-        paddingVertical: 10,
+        paddingVertical: 5,
     },
     cardContainer: {
-        paddingVertical: 10,
+        paddingVertical: 5,
+    },
+    customTitleCategory: {
+      
     },
 })
