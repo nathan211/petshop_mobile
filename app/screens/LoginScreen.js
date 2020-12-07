@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Image, View } from 'react-native';
 import * as Yup from 'yup';
 import jwtDecode from 'jwt-decode';
+import { connect } from 'react-redux';
 
 import authApi from '../api/auth';
 import colors from '../config/colors';
@@ -9,13 +10,14 @@ import Button from '../components/Button';
 import Screen from '../components/Screen';
 import Text from '../components/Text';
 import { Form, FormField, SubmitButton, ErrorMessage } from '../components/forms';
+import { signIn } from '../redux/authSlice';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
     password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
 });
 
-export default function LoginScreen({ navigation }) {
+function LoginScreen({ navigation, signIn }) {
     const [loginFailed, setLoginFailed] = useState(false);
 
     const handleSubmit = async ({email, password}) => {
@@ -25,7 +27,8 @@ export default function LoginScreen({ navigation }) {
 
         setLoginFailed(false);
         const customer = jwtDecode(result.data);
-        console.log(customer.info);    
+        //console.log(customer.info);
+        signIn(result.data, customer.info);
     }
 
     return (
@@ -113,3 +116,10 @@ const styles = StyleSheet.create({
         marginBottom: 10
     }
 })
+
+const mapDispatch = {
+    signIn,
+};
+  
+
+export default connect(null, mapDispatch)(LoginScreen)

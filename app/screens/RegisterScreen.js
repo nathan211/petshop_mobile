@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image, View, ScrollView } from 'react-native';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
 
 import customerApi from '../api/customer';
 import colors from '../config/colors';
@@ -20,8 +21,10 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-export default function LoginScreen({ navigation }) {
+function RegisterScreen({ navigation, currentUser }) {
     const [registerFailed, setRegisterFailed] = useState(false);
+
+    console.log(currentUser);
 
     const handleSubmit = async ({fullName, address, phoneNumber, email, password}) => {
         const result = await customerApi.register(fullName, address, phoneNumber, email, password);
@@ -130,4 +133,12 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
 })
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        currentUser: state.auth.currentUser,
+    };
+};
+
+export default connect(mapStateToProps, null)(RegisterScreen)
 

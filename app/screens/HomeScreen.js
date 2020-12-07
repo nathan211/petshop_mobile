@@ -50,16 +50,6 @@ export default function HomeScreen() {
                 <CumulativePoints />
                 <View style={styles.categoryContainer}>
                     <Text style={styles.title}>Danh mục</Text>
-                    {/* <ScrollView 
-                        style={styles.iconContainer}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        <Category 
-                            icon='paw' 
-                            title='Thức ăn cho chó'
-                        />
-                    </ScrollView> */}
                     <FlatList 
                         style={styles.iconContainer}
                         horizontal
@@ -77,7 +67,6 @@ export default function HomeScreen() {
                     <FlatList 
                         style={styles.cardContainer}
                         horizontal
-                        //showsHorizontalScrollIndicator={false}
                         data={listOfProducts}
                         keyExtractor={item => item._id.toString()}
                         renderItem={({item}) => {
