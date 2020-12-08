@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 7,
+        marginVertical: 5,
     },
     iconContainer: {
-        width: 70,
+        width: 70, 
         height: 70,
         backgroundColor: colors.white,
         borderRadius: 35,

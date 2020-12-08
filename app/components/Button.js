@@ -3,13 +3,13 @@ import { StyleSheet, Text, TouchableHighlight, TouchableHighlightBase, Touchable
 
 import colors from '../config/colors'
 
-export default function Button({ title, onPress, color = 'light', customStyleTitle }) {
+export default function Button({ title, onPress, color = 'light', customTitleStyle, customContainerStyle }) {
     return (
         <TouchableOpacity
-            style={[styles.button, {backgroundColor: colors[color]}]}
+            style={[styles.button, {backgroundColor: colors[color]}, customContainerStyle]}
             onPress={onPress}
         >
-            <Text style={[styles.title, customStyleTitle]}>{title}</Text>
+            <Text style={[styles.title, customTitleStyle]}>{title}</Text>
         </TouchableOpacity>
     )
 }

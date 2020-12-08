@@ -9,7 +9,6 @@ export const Auth = {
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        isSignOut: false,
         userToken: null,
         currentUser: null,
     },
@@ -26,7 +25,6 @@ const authSlice = createSlice({
         },
         signOut: {
             reducer(state, action){
-                state.isSignOut = true;
                 state.userToken = null;
                 state.currentUser = null;
             },

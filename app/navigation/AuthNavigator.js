@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 
 import colors from '../config/colors';
 import LoginScreen from '../screens/LoginScreen';
@@ -9,7 +9,11 @@ const Stack = createStackNavigator();
 
 export default function AuthNavigator() {
     return (
-        <Stack.Navigator mode="modal">
+        <Stack.Navigator
+            screenOptions={{
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+            }}
+        >
             <Stack.Screen 
                 name="Login" 
                 component={LoginScreen} 
@@ -30,7 +34,7 @@ export default function AuthNavigator() {
                     headerTitleStyle: {
                       fontWeight: 'bold',
                     },
-                    headerTitleAlign: 'center'
+                    headerTitleAlign: 'center',
                 }}
             />
       </Stack.Navigator>

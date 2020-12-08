@@ -60,10 +60,11 @@ export default function HomeScreen() {
                                 <Category title={item.name} icon='paw' />
                             );
                         }}
+                        showsHorizontalScrollIndicator={false} 
                     />
                 </View>
                 <View style={styles.featureProductContainer}>
-                    <Text style={styles.title}>Sản phẩm nỗi bật</Text>
+                    <Text style={styles.title}>Sản phẩm nỗi bật</Text> 
                     <FlatList 
                         style={styles.cardContainer}
                         horizontal
@@ -74,6 +75,7 @@ export default function HomeScreen() {
                                 <Card title={item.name} subTitle={item.price} />
                             );
                         }}
+                        showsHorizontalScrollIndicator={false}
                     />
                 </View>
             </View>

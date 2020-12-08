@@ -53,6 +53,7 @@ function LoginScreen({ navigation, signIn }) {
                     keyboardType='email-address'
                     placeholder='Email'
                     textContentType='emailAddress'
+                    customInputStyle={styles.customInput}
                 />
                 <FormField 
                     autoCorrect={false}
@@ -62,6 +63,7 @@ function LoginScreen({ navigation, signIn }) {
                     placeholder='Mật khẩu'
                     textContentType='password'
                     secureTextEntry
+                    customInputStyle={styles.customInput}
                 />
                 <SubmitButton title='đăng nhập'/>
                 <View style={styles.separatorContainer}>
@@ -86,6 +88,9 @@ const styles = StyleSheet.create({
     },
     customStyleTitle: {
         color: colors.light
+    },
+    customInput: {
+        color: colors.white
     },
     logoContainer: {
         alignItems: 'center',
