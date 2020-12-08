@@ -74,7 +74,7 @@ function LoginScreen({ navigation, signIn }) {
                     title='đăng ký' 
                     onPress={() => navigation.navigate('Register')}
                     color='dark'
-                    customStyleTitle={styles.customStyleTitle}
+                    customTitleStyle={styles.customTitle}
                 />
             </Form>
         </Screen>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         padding: 25,
         backgroundColor: colors.pink,
     },
-    customStyleTitle: {
+    customTitle: {
         color: colors.light
     },
     customInput: {

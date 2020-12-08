@@ -1,13 +1,13 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import AccountScreen from '../screens/AccountScreen'
-import BookingScreen from '../screens/BookingScreen'
-import CategoryScreen from '../screens/CategoryScreen'
-import HomeScreen from '../screens/HomeScreen'
-import SearchScreen from '../screens/SearchScreen'
+import AccountScreen from '../screens/AccountScreen';
+import BookingScreen from '../screens/BookingScreen';
+import CategoryScreen from '../screens/CategoryScreen';
+import SearchScreen from '../screens/SearchScreen';
+import HomeNavigator from './HomeNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +16,7 @@ export default function AppNavigator() {
         <Tab.Navigator>
             <Tab.Screen
                 name='Home'
-                component={HomeScreen}
+                component={HomeNavigator}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon 

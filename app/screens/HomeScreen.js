@@ -3,15 +3,16 @@ import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native';
 
 import colors from '../config/colors';
 import CumulativePoints from '../components/CumulativePoints';
-import Chatting from '../components/Chatting';
 import Category from '../components/Category';
 import Card from '../components/Card';
+import Chatting from '../components/Chatting';
 import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
 import productApi from '../api/product';
 import categoryApi from '../api/category';
+import navigationTheme from '../navigation/navigationTheme';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
     const [listOfProducts, setListOfProducts] = useState([]);
     const [listOfCategories, setListOfCategories] = useState([]);
 
@@ -72,7 +73,11 @@ export default function HomeScreen() {
                         keyExtractor={item => item._id.toString()}
                         renderItem={({item}) => {
                             return (
-                                <Card title={item.name} subTitle={item.price} />
+                                <Card 
+                                    title={item.name} 
+                                    subTitle={item.price} 
+                                    onPress={() => navigation.navigate('ProductDetails')}
+                                />
                             );
                         }}
                         showsHorizontalScrollIndicator={false}

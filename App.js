@@ -14,7 +14,6 @@ import SplashScreen from 'react-native-splash-screen';
 
 import rootReducer from './app/redux/reducers';
 import Root from './app/root'
-import ProductDetailsScreen from './app/screens/ProductDetailsScreen';
 
 const store = configureStore({
   reducer: rootReducer
@@ -28,8 +27,7 @@ const App: () => React$Node = () => {
 
   return (
     <Provider store={store}>  
-      {/* <Root /> */}
-      <ProductDetailsScreen />
+      <Root />
     </Provider>
   );
 };

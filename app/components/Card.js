@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native'
 
 import colors from '../config/colors'
 import Text from './Text'
@@ -9,15 +9,18 @@ export default function Card({
         title, 
         subTitle, 
         customContainerStyle,
-        customTitleStyle }) {
+        customTitleStyle,
+        onPress }) {
     return (
-        <View style={[styles.container, customContainerStyle]}>
-            <Image style={styles.image} source={require('../assets/images/product.jpg')} />
-            <View style={styles.titleContainer}>
-                <Text numberOfLines={2} customStyle={[styles.title, customTitleStyle]}>{title}</Text>
-                <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>
+        <TouchableWithoutFeedback onPress={onPress}>
+            <View style={[styles.container, customContainerStyle]}>
+                    <Image style={styles.image} source={require('../assets/images/product.jpg')} />
+                    <View style={styles.titleContainer}>
+                        <Text numberOfLines={2} customStyle={[styles.title, customTitleStyle]}>{title}</Text>
+                        <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>
+                    </View>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 

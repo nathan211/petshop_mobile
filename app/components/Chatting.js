@@ -4,13 +4,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import colors from '../config/colors';
 
-export default function Chatting({ onPress }) {
+export default function Chatting({ onPress, customContainerStyle }) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
-            <View style={styles.container}>
+            <View style={[styles.container, customContainerStyle]}>
                 <Icon 
                     name='commenting-o' 
-                    size={25}
+                    size={20}
                     color={colors.white}
                 />
             </View>
