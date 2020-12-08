@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
     return {
         currentUser: state.auth.currentUser,
     };

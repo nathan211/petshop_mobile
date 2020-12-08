@@ -11,7 +11,7 @@ const authSlice = createSlice({
     initialState: {
         isSignOut: false,
         userToken: null,
-        currentUser: {},
+        currentUser: null,
     },
     reducers: {
         signIn: {
