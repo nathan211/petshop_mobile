@@ -18,12 +18,15 @@ export default function Button({
             style={[styles.button, {backgroundColor: colors[color]}, customContainerStyle]}
             onPress={onPress}
         >
-            <Icon 
-                style={styles.icon}
-                name={icon}
-                size={25}
-                color={iconColor}
-            />
+            {
+                icon &&
+                <Icon 
+                    style={styles.icon}
+                    name={icon}
+                    size={25}
+                    color={iconColor}
+                />
+            }
             <Text style={[styles.title, customTitleStyle]}>{title}</Text>
         </TouchableOpacity>
     )

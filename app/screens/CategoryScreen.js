@@ -7,12 +7,12 @@ import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
 
-export default function CategoryScreen() {
+export default function CategoryScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <SearchBar customStyle={styles.customSearchBarStyle} />
-                <ShoppingCart onPress={() => console.log('go to shopping cart')} />
+                <ShoppingCart onPress={() => navigation.navigate('ShoppingCart')} />
             </View>
             <View style={styles.content}>
                 <View style={styles.parentCategory}>

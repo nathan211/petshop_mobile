@@ -10,7 +10,6 @@ import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
 import productApi from '../api/product';
 import categoryApi from '../api/category';
-import navigationTheme from '../navigation/navigationTheme';
 
 export default function HomeScreen({ navigation }) {
     const [listOfProducts, setListOfProducts] = useState([]);
@@ -44,7 +43,7 @@ export default function HomeScreen({ navigation }) {
         <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <SearchBar customStyle={styles.customStyle} />
-                <ShoppingCart onPress={() => getListOfProducts()} />
+                <ShoppingCart onPress={() => navigation.navigate('ShoppingCart')} />
                 <Chatting onPress={() => console.log('go to chatting')} />
             </View>
             <View style={styles.content}>

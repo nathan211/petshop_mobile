@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import AppNavigator from '../navigation/AppNavigator';
 import AuthNavigator from '../navigation/AuthNavigator';
 import navigationTheme from '../navigation/navigationTheme';
+import ShoppingCartScreen from '../screens/ShoppingCartScreen';
 
 function Root({ currentUser }) {
     return (
         <NavigationContainer theme={navigationTheme}>
             {/* { currentUser ? <AppNavigator /> : <AuthNavigator /> } */}
-            <AppNavigator />
+            <ShoppingCartScreen />
         </NavigationContainer>
     )
 }
