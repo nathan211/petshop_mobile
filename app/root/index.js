@@ -8,10 +8,10 @@ import AuthNavigator from '../navigation/AuthNavigator';
 import navigationTheme from '../navigation/navigationTheme';
 
 function Root({ currentUser }) {
-    console.log(currentUser);
     return (
         <NavigationContainer theme={navigationTheme}>
-            { currentUser ? <AppNavigator /> : <AuthNavigator /> }
+            {/* { currentUser ? <AppNavigator /> : <AuthNavigator /> } */}
+            <AppNavigator />
         </NavigationContainer>
     )
 }

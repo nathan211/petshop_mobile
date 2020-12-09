@@ -8,7 +8,9 @@ import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
 
-export default function ProductDetailsScreen() {
+export default function ProductDetailsScreen({ route }) {
+    const { name, price, quantity, description } = route.params;
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -39,10 +41,9 @@ export default function ProductDetailsScreen() {
                         customStyle={styles.productName}
                         numberOfLines={2}
                     >
-                        Bột Rắc Đồ Ăn Trị Hôi Miệng, Cao Răng Chó Mèo 1gx30 Gói – Cature Oral Care Pro – Mỹ
-                        Bột Rắc Đồ Ăn Trị Hôi Miệng, Cao Răng Chó Mèo 1gx30 Gói – Cature Oral Care Pro – Mỹ
+                        { name }
                     </Text>
-                    <Text customStyle={styles.price}>123456</Text>
+                    <Text customStyle={styles.price}>{ price }</Text>
                 </View>
                 <View style={styles.detailsContainer}>
                     <Text customStyle={styles.title}>Thông tin chi tiết</Text>
@@ -56,13 +57,13 @@ export default function ProductDetailsScreen() {
                     </View>
                     <View style={styles.quantityContainer}>
                         <Text customStyle={styles.detailTitle}>Số lượng kho: </Text>
-                        <Text customStyle={styles.info}>123</Text>
+                        <Text customStyle={styles.info}>{ quantity }</Text>
                     </View>
                 </View>
                 <View style={styles.descriptionContainer}>
                     <Text customStyle={styles.title}>Mô tả sản phẩm</Text>
                     <Text customStyle={styles.description}>
-                        Cửa Hàng Đồ Cho Thú Cưng Giá Tốt, Khuyến Mại Hấp Dẫn, Giá Rẻ Bất Ngờ. Chuỗi Hệ Thống Cửa Hàng Uy Tín. Nhân Viên Nhiều Kinh Nghiệm. Khuyến Mãi Hấp Dẫn. Xem Ngay! Dịch Vụ Uy Tín. Giao Hàng Tận Nơi. Chuyên Viên Tay Nghề Cao. Giá Luôn Tốt Nhất.
+                        { description }
                     </Text>
                 </View>
             </ScrollView>

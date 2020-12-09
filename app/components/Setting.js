@@ -10,7 +10,7 @@ export default function Setting({ onPress }) {
             <View style={styles.container}>
                 <Icon 
                     name='cog' 
-                    size={25}
+                    size={20}
                     color={colors.white}
                 />
             </View>

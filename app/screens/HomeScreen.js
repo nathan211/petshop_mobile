@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation }) {
                                 <Card 
                                     title={item.name} 
                                     subTitle={item.price} 
-                                    onPress={() => navigation.navigate('ProductDetails')}
+                                    onPress={() => navigation.navigate('ProductDetails', item)}
                                 />
                             );
                         }}
