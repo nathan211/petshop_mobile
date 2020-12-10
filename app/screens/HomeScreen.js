@@ -6,8 +6,8 @@ import CumulativePoints from '../components/CumulativePoints';
 import Category from '../components/Category';
 import Card from '../components/Card';
 import Chatting from '../components/Chatting';
-import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
+import SearchBar from '../components/SearchBar';
 import productApi from '../api/product';
 import categoryApi from '../api/category';
 

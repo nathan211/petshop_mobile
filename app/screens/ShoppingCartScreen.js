@@ -14,7 +14,7 @@ function ShoppingCartScreen({
     navigation, 
     cartItems, 
     decreaseHandler, 
-    increaseHandler }) {
+    increaseHandler, }) {
     return (
         <View style={styles.container}>
              <View style={styles.header}>
@@ -29,13 +29,11 @@ function ShoppingCartScreen({
                         />
                     </TouchableWithoutFeedback>
                 </View>
-                <Text>Giỏ hàng</Text>
-                <View style={styles.iconContainer}>
-                    <Chatting 
-                        onPress={() => console.log('go to chatting')} 
-                        customContainerStyle={styles.customIconContainer}
-                    />
-                </View>
+                <Text customStyle={{
+                    width: '100%',
+                    textAlign: 'center',
+                    paddingRight: 80,
+                }}>Giỏ hàng({cartItems.length})</Text>
             </View>
             <ScrollView style={styles.cartContainer}>
                 <View style={styles.addressContainer}>
@@ -128,11 +126,12 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         padding: 5,
         alignItems: 'center',
-        justifyContent: 'space-between',
     },
     orderContainer: {
+        backgroundColor: colors.white,
         flexDirection: 'row',
         width: '100%',
+        paddingHorizontal: 5,
     },
     iconBackContainer: {
         marginLeft: 5,
@@ -145,7 +144,7 @@ const styles = StyleSheet.create({
     },
     totalContainer: {
         width: '40%',
-        padding: 5
+        padding: 5,
     },
     totalTitle: {
         fontSize: 14

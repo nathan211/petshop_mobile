@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, Text } from 'react-native';
 
 import colors from '../config/colors';
 import Category from '../components/Category';
@@ -158,6 +158,13 @@ export default function CategoryScreen({ navigation }) {
                     </ScrollView>
                 </View>
                 <View style={styles.categoryContainer}>
+                    <Text style={{
+                        width: '100%', 
+                        marginBottom: 5, 
+                        marginLeft: 5, 
+                        fontSize: 16}}>
+                            Tất cả danh mục
+                    </Text>
                     <ScrollView 
                         //style={{maxHeight: 1000}}
                     >
