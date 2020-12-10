@@ -1,17 +1,24 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
 import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
+import { addToCart } from '../redux/shoppingCartSlice';
 
-export default function ProductDetailsScreen({ route, navigation }) {
+function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
     const { name, price, quantity, description } = route.params;
-    const product = route.params;
-    console.log(product);
+    console.log(cartItems);
+    
+    const handleAddToCart = () => {
+        const product = route.params;
+        console.log('adding to cart...', product);
+        addToCart(product);
+    }
 
     return (
         <View style={styles.container}>
@@ -80,6 +87,7 @@ export default function ProductDetailsScreen({ route, navigation }) {
                 icon='cart-plus'
                 iconColor={colors.white}
                 color='pink'
+                onPress={handleAddToCart}
             /> 
         </View>
     )
@@ -186,3 +194,15 @@ const styles = StyleSheet.create({
         color: colors.black
     }
 })
+
+const mapStateToProps = state => {
+    return {
+        cartItems: state.cart.cartItems
+    }
+}
+
+const mapDispatch = {
+    addToCart,
+}
+
+export default connect(mapStateToProps, mapDispatch)(ProductDetailsScreen)

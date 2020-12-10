@@ -13,7 +13,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import SplashScreen from 'react-native-splash-screen';
 
 import rootReducer from './app/redux/reducers';
-import Root from './app/root'
+import Root from './app/root';
 
 const store = configureStore({
   reducer: rootReducer

@@ -14,7 +14,7 @@ import { signIn } from '../redux/authSlice';
 
 function Root({ currentUser, signIn }) {
     const [isLoading, setIsLoading] = useState(true);
-
+    
     useEffect(() => {
         refreshToken();
     }, []);
