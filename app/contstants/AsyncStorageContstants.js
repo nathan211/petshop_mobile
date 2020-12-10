@@ -1,0 +1,4 @@
+export default {
+    AUTH_USER_TOKEN: 'AUTH_USER_TOKEN',
+    AUTH_USER_INFO: 'AUTH_USER_INFO',
+}

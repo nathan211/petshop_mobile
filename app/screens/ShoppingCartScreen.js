@@ -1,14 +1,40 @@
 import React from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
 import CartItem from '../components/CartItem';
+import Chatting from '../components/Chatting';
+import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
 
-export default function ShoppingCartScreen() {
+export default function ShoppingCartScreen({ navigation }) {
     return (
         <View style={styles.container}>
+             <View style={styles.header}>
+                <View style={styles.iconBackContainer}>
+                    <TouchableWithoutFeedback 
+                        onPress={() => navigation.goBack()}
+                    >
+                        <Icon 
+                            name='chevron-circle-left'
+                            size={40}
+                            color={colors.grey}
+                        />
+                    </TouchableWithoutFeedback>
+                </View>
+                <View style={styles.iconContainer}>
+                    <Chatting 
+                        onPress={() => console.log('go to chatting')} 
+                        customContainerStyle={styles.customIconContainer}
+                    />
+                    <ShoppingCart 
+                        onPress={() => getListOfProducts()}
+                        customContainerStyle={styles.customIconContainer} 
+                    />
+                </View>
+            </View>
             <ScrollView style={styles.cartContainer}>
                 <View style={styles.addressContainer}>
                     <View style={styles.addressWrapper}>
@@ -82,6 +108,14 @@ const styles = StyleSheet.create({
     customButtonContainer: {
         flex: 1
     },
+    customIconContainer: {
+        backgroundColor: colors.grey,
+        width: 35,
+        height: 35,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     delete: {
         color: colors.secondary,
         fontSize: 14
@@ -89,9 +123,26 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: 'bold'
     },
+    header: {
+        height: 45,
+        flexDirection: 'row',
+        backgroundColor: colors.white,
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
     orderContainer: {
         flexDirection: 'row',
         width: '100%',
+    },
+    iconBackContainer: {
+        marginLeft: 5,
+        width: '10%'
+    },
+    iconContainer: {
+        flexDirection: 'row',
+        width: '20%',
+        marginRight: 10,
     },
     totalContainer: {
         width: '40%',

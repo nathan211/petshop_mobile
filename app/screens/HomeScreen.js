@@ -28,7 +28,6 @@ export default function HomeScreen({ navigation }) {
         try {
             const result = await categoryApi.getListOfCategories();
             setListOfCategories(result.data);
-            console.log(result.data);
         } catch (error) {
             console.log(error);
         }

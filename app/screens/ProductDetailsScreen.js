@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../components/Button';
@@ -8,18 +8,24 @@ import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
 
-export default function ProductDetailsScreen({ route }) {
+export default function ProductDetailsScreen({ route, navigation }) {
     const { name, price, quantity, description } = route.params;
+    const product = route.params;
+    console.log(product);
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.iconBackContainer}>
-                    <Icon 
-                        name='chevron-circle-left'
-                        size={40}
-                        color={colors.grey}
-                    />
+                    <TouchableWithoutFeedback 
+                        onPress={() => navigation.goBack()}
+                    >
+                        <Icon 
+                            name='chevron-circle-left'
+                            size={40}
+                            color={colors.grey}
+                        />
+                    </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.iconContainer}>
                     <Chatting 
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
         height: 35,
         borderRadius: 20,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     customButton: {
         borderRadius: 0,
@@ -135,7 +141,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: colors.white,
         padding: 5,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     quantityContainer: {
         backgroundColor: colors.light,
@@ -145,12 +152,13 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5
     },
     iconBackContainer: {
-        flex: 1,
-        marginLeft: 5
+        marginLeft: 5,
+        width: '10%'
     },
     iconContainer: {
         flexDirection: 'row',
-        width: '25%',
+        width: '20%',
+        marginRight: 10,
     },
     info: {
         color: colors.black

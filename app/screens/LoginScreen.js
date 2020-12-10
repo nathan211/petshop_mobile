@@ -11,6 +11,7 @@ import Screen from '../components/Screen';
 import Text from '../components/Text';
 import { Form, FormField, SubmitButton, ErrorMessage } from '../components/forms';
 import { signIn } from '../redux/authSlice';
+import { storeUserToken } from '../api/ManagerStorage';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
@@ -26,9 +27,9 @@ function LoginScreen({ navigation, signIn }) {
         if(!result.ok) return setLoginFailed(true);
 
         setLoginFailed(false);
-        const customer = jwtDecode(result.data);
-        //console.log(customer.info);
-        signIn(result.data, customer.info);
+        const currentUser = jwtDecode(result.data);
+        signIn(result.data, currentUser.info);
+        storeUserToken(result.data);
     }
 
     return (
