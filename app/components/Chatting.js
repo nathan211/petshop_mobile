@@ -10,7 +10,7 @@ export default function Chatting({ onPress, customContainerStyle }) {
             <View style={[styles.container, customContainerStyle]}>
                 <Icon 
                     name='commenting-o' 
-                    size={20}
+                    size={22}
                     color={colors.white}
                 />
             </View>

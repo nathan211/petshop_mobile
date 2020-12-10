@@ -1,15 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
 import CartItem from '../components/CartItem';
 import Chatting from '../components/Chatting';
-import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
+import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
 
-export default function ShoppingCartScreen({ navigation }) {
+function ShoppingCartScreen({ 
+    navigation, 
+    cartItems, 
+    decreaseHandler, 
+    increaseHandler }) {
     return (
         <View style={styles.container}>
              <View style={styles.header}>
@@ -24,14 +29,11 @@ export default function ShoppingCartScreen({ navigation }) {
                         />
                     </TouchableWithoutFeedback>
                 </View>
+                <Text>Giỏ hàng</Text>
                 <View style={styles.iconContainer}>
                     <Chatting 
                         onPress={() => console.log('go to chatting')} 
                         customContainerStyle={styles.customIconContainer}
-                    />
-                    <ShoppingCart 
-                        onPress={() => getListOfProducts()}
-                        customContainerStyle={styles.customIconContainer} 
                     />
                 </View>
             </View>
@@ -49,21 +51,18 @@ export default function ShoppingCartScreen({ navigation }) {
                         <Text customStyle={styles.delete}>Sửa</Text>
                     </TouchableWithoutFeedback>
                 </View>
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
+                { cartItems.map(item => {
+                    return (
+                        <CartItem 
+                            key={item._id.toString()}
+                            name={item.name} 
+                            price={item.price} 
+                            cartCounter={item.cartCounter}
+                            onDecrease={() => decreaseHandler(item._id)}
+                            onIncrease={() => increaseHandler(item._id)}
+                        />
+                    );
+                }) }
             </ScrollView>
             <View style={styles.orderContainer}>
                 <View style={styles.totalContainer}>
@@ -141,8 +140,8 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         flexDirection: 'row',
-        width: '20%',
-        marginRight: 10,
+        width: '10%',
+        marginRight: 5,
     },
     totalContainer: {
         width: '40%',
@@ -156,3 +155,16 @@ const styles = StyleSheet.create({
         color: colors.red
     }
 })
+
+const mapStateToProps = state => {
+    return {
+        cartItems: state.cart.cartItems
+    }
+}
+
+const mapDispatch = {
+    decreaseHandler,
+    increaseHandler,
+}
+
+export default connect(mapStateToProps, mapDispatch)(ShoppingCartScreen)

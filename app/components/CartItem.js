@@ -5,7 +5,13 @@ import Button from '../components/Button';
 import colors from '../config/colors';
 import Text from '../components/Text';
 
-export default function CartItem({ onPress }) {
+export default function CartItem({ 
+    name, 
+    cartCounter, 
+    price,
+    onDecrease,
+    onIncrease,
+    onDelete}) {
     return (
         <TouchableWithoutFeedback onPress={() => console.log('go to details')}>
             <View style={styles.container}>
@@ -14,16 +20,19 @@ export default function CartItem({ onPress }) {
                     source={require('../assets/images/product.jpg')} 
                 />
                 <View style={styles.nameContainer}>
-                    <Text>Thức ăn cho chó</Text>
+                    <Text>{ name }</Text>
+                    <Text>{ price }</Text>
                     <View style={styles.counterContainer}>
                         <Button 
                             title='-'
                             customContainerStyle={styles.customContainerButton}
+                            onPress={onDecrease}
                         />
-                        <Text customStyle={styles.counter}>1</Text>
+                        <Text customStyle={styles.counter}>{ cartCounter }</Text>
                         <Button 
                             title='+' 
                             customContainerStyle={styles.customContainerButton}
+                            onPress={onIncrease}
                         />
                     </View>
                 </View>

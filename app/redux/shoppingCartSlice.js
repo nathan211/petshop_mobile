@@ -11,12 +11,11 @@ const shoppingCartSlice = createSlice({
                 const { product } = action.payload;
                 let productAlreadyInCart = false;
 
-                state.cartItems.map(item => {
+                state.cartItems.forEach(item => {
                     if(item._id === product._id){
-                        item.quantity++;
+                        item.cartCounter++;
                         productAlreadyInCart = true;
                     }
-                    return item;
                 });
 
                 if(!productAlreadyInCart){
@@ -27,8 +26,34 @@ const shoppingCartSlice = createSlice({
                 return { payload: { product } };
             }
         },
+        decreaseHandler: {
+            reducer(state, action){
+                const { id } = action.payload;
+                state.cartItems.forEach(item => {
+                    if(item._id === id){
+                        item.cartCounter--;
+                    }
+                });
+            },
+            prepare(id){
+                return { payload: { id } };
+            }
+        },
+        increaseHandler: {
+            reducer(state, action){
+                const { id } = action.payload;
+                state.cartItems.forEach(item => {
+                    if(item._id === id){
+                        item.cartCounter++;
+                    }
+                });
+            },
+            prepare(id){
+                return { payload: { id } };
+            }
+        }
     }
 });
 
-export const { addToCart } = shoppingCartSlice.actions;
+export const { addToCart, decreaseHandler, increaseHandler } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;

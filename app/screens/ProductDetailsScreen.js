@@ -12,11 +12,9 @@ import { addToCart } from '../redux/shoppingCartSlice';
 
 function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
     const { name, price, quantity, description } = route.params;
-    console.log(cartItems);
     
     const handleAddToCart = () => {
         const product = route.params;
-        console.log('adding to cart...', product);
         addToCart(product);
     }
 
@@ -35,13 +33,13 @@ function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.iconContainer}>
+                    <ShoppingCart 
+                        onPress={() => navigation.navigate('ShoppingCart')}
+                        customContainerStyle={styles.customIconContainer} 
+                    />
                     <Chatting 
                         onPress={() => console.log('go to chatting')} 
                         customContainerStyle={styles.customIconContainer}
-                    />
-                    <ShoppingCart 
-                        onPress={() => getListOfProducts()}
-                        customContainerStyle={styles.customIconContainer} 
                     />
                 </View>
             </View>
