@@ -22,14 +22,18 @@ function LoginScreen({ navigation, signIn }) {
     const [loginFailed, setLoginFailed] = useState(false);
 
     const handleSubmit = async ({email, password}) => {
-        const result = await authApi.login(email, password);
-        
-        if(!result.ok) return setLoginFailed(true);
-
-        setLoginFailed(false);
-        const currentUser = jwtDecode(result.data);
-        signIn(result.data, currentUser.info);
-        storeUserToken(result.data);
+        try {
+            const result = await authApi.login(email, password);
+            
+            if(!result.ok) return setLoginFailed(true);
+    
+            setLoginFailed(false);
+            const currentUser = jwtDecode(result.data);
+            signIn(result.data, currentUser.info);
+            storeUserToken(result.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

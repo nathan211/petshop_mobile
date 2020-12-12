@@ -11,7 +11,6 @@ import navigationTheme from '../navigation/navigationTheme';
 import { getUserToken } from '../api/ManagerStorage';
 import { signIn } from '../redux/authSlice';
 
-
 function Root({ currentUser, signIn }) {
     const [isLoading, setIsLoading] = useState(true);
     
@@ -36,7 +35,7 @@ function Root({ currentUser, signIn }) {
  
     return (
         <NavigationContainer theme={navigationTheme}>
-            { currentUser == null ? <AuthNavigator /> : <AppNavigator /> }
+            { currentUser ? <AppNavigator /> : <AuthNavigator /> }
         </NavigationContainer>
     )
 }

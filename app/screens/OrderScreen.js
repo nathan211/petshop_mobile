@@ -1,19 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
-import CartItem from '../components/CartItem';
 import Text from '../components/Text';
 import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
+import OrderItem from '../components/OrderItem';
+import orderApi from '../api/order';
+import orderDetailsApi from '../api/orderDetails';
 
-function ShoppingCartScreen({ 
-    navigation, 
-    cartItems, 
-    decreaseHandler, 
-    increaseHandler, }) {
+function OrderScreen({ navigation, cartItems, currentUser }) {
+    const [totalMoney, setTotalMoney] = useState(123456789);
+
+    const handleSubmit = async () => {
+        try {
+            const result = await orderApi.insertOrder(currentUser._id, totalMoney);
+    
+            if(result.ok){
+                const resultGetLatestOrder = await orderApi.getLatestOrder(currentUser._id);
+                if(resultGetLatestOrder.ok){
+                    const order = resultGetLatestOrder.data;
+                    cartItems.forEach(item => {
+                        insert(order._id, item._id, item.cartCounter);
+                    });
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const insert = async (orderId, productId, amount )=> {
+        const res = await orderDetailsApi.insertOrderDetails(orderId, productId, amount);
+        console.log('order details: ', res.data);
+    }
+    
     return (
         <View style={styles.container}>
              <View style={styles.header}>
@@ -32,14 +55,16 @@ function ShoppingCartScreen({
                     width: '100%',
                     textAlign: 'center',
                     paddingRight: 80,
-                }}>Giỏ hàng({cartItems.length})</Text>
+                }}>Xác nhận đơn hàng</Text>
             </View>
             <ScrollView style={styles.cartContainer}>
                 <View style={styles.addressContainer}>
                     <View style={styles.addressWrapper}>
                         <Text customStyle={styles.addressTitle}>Địa chỉ giao hàng</Text>
-                        <Text customStyle={styles.name}>Nguyễn Việt Phi - 0962104912</Text>
-                        <Text customStyle={styles.address}>Somewhere in Vietnam</Text>
+                        <Text customStyle={styles.name}>
+                            {currentUser.fullName + ' - ' + currentUser.phoneNumber}
+                        </Text>
+                        <Text customStyle={styles.address}>{currentUser.address}</Text>
                     </View>
                     <TouchableWithoutFeedback 
                         style={styles.deleteContainer}
@@ -51,13 +76,11 @@ function ShoppingCartScreen({
                 { 
                     cartItems.map(item => {
                         return (
-                            <CartItem 
+                            <OrderItem 
                                 key={item._id.toString()}
                                 name={item.name} 
                                 price={item.price} 
                                 cartCounter={item.cartCounter}
-                                onDecrease={() => decreaseHandler(item._id)}
-                                onIncrease={() => increaseHandler(item._id)}
                             />
                         );
                     }) 
@@ -69,11 +92,11 @@ function ShoppingCartScreen({
                     <Text customStyle={styles.total}>123456789</Text>
                 </View>
                 <Button 
-                    title='tiến hành đặt hàng' 
+                    title='đặt hàng' 
                     color='brown'
                     customTitleStyle={styles.customButtonTitle}
                     customContainerStyle={styles.customButtonContainer}
-                    onPress={() => navigation.navigate('Order')}
+                    onPress={handleSubmit}
                 />
             </View>
         </View>
@@ -159,7 +182,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        cartItems: state.cart.cartItems
+        cartItems: state.cart.cartItems,
+        currentUser: state.auth.currentUser
     }
 }
 
@@ -168,4 +192,4 @@ const mapDispatch = {
     increaseHandler,
 }
 
-export default connect(mapStateToProps, mapDispatch)(ShoppingCartScreen)
+export default connect(mapStateToProps, mapDispatch)(OrderScreen)

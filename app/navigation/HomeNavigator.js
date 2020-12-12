@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import ShoppingCartScreen from '../screens/ShoppingCartScreen';
+import OrderScreen from '../screens/OrderScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,13 @@ export default function HomeNavigator() {
             <Stack.Screen 
                 name="ShoppingCart" 
                 component={ShoppingCartScreen} 
+                options={{
+                    headerShown: false, 
+                }}
+            />
+            <Stack.Screen 
+                name="Order" 
+                component={OrderScreen} 
                 options={{
                     headerShown: false, 
                 }}
