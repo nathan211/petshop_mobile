@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../screens/HomeScreen';
+import CategoryScreen from '../screens/CategoryScreen';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import ShoppingCartScreen from '../screens/ShoppingCartScreen';
 import OrderScreen from '../screens/OrderScreen';
@@ -9,14 +9,21 @@ import ProductScreen from '../screens/ProductsScreen';
 
 const Stack = createStackNavigator();
 
-export default function HomeNavigator() {
+export default function CategoryNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen 
-                name="Home" 
-                component={HomeScreen} 
+                name="Category" 
+                component={CategoryScreen} 
                 options={{
                     headerShown: false,
+                }}
+            />
+            <Stack.Screen 
+                name="Products" 
+                component={ProductScreen} 
+                options={{
+                    headerShown: false, 
                 }}
             />
             <Stack.Screen 
@@ -36,13 +43,6 @@ export default function HomeNavigator() {
             <Stack.Screen 
                 name="Order" 
                 component={OrderScreen} 
-                options={{
-                    headerShown: false, 
-                }}
-            />
-            <Stack.Screen 
-                name="Products" 
-                component={ProductScreen} 
                 options={{
                     headerShown: false, 
                 }}

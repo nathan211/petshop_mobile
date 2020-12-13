@@ -8,6 +8,7 @@ import BookingScreen from '../screens/BookingScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 import SearchScreen from '../screens/SearchScreen';
 import HomeNavigator from './HomeNavigator';
+import CategoryNavigator from './CategoryNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ export default function AppNavigator() {
             />
             <Tab.Screen
                 name='Category'
-                component={CategoryScreen}
+                component={CategoryNavigator}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon 

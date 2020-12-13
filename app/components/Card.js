@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginVertical: 10,
         marginHorizontal: 5,
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
     image: {
         width: '100%',

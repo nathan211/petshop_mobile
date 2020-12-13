@@ -1,13 +1,46 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, ScrollView, Text, FlatList } from 'react-native';
 
 import colors from '../config/colors';
 import Category from '../components/Category';
 import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
+import parentCategoryApi from '../api/parentCategory';
+import categoryApi from '../api/category';
 
 export default function CategoryScreen({ navigation }) {
+    const [listOfParentCategories, setListOfParentCategories] = useState([]); 
+    const [listOfCategories, setListOfCategories] = useState([]); 
+
+    useEffect(() => {
+        getListOfParentCategories();
+        getListOfCategories();
+    }, []);
+
+    const getListOfParentCategories = async () => {
+        try {
+            const result = await parentCategoryApi.getListOfParentCategories();
+            if(result.ok){
+                setListOfParentCategories(result.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getListOfCategories = async () => {
+        try {
+            const result = await categoryApi.getListOfCategories();
+            if(result.ok){
+                setListOfCategories(result.data);
+                console.log(result.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -26,309 +59,44 @@ export default function CategoryScreen({ navigation }) {
                             customTitleStyle={styles.customTitleStyle}
                             title='Gợi ý cho bạn'
                             iconColor={colors.yellow}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
-                        <Category 
-                            icon='paw'
-                            customContainerStyle={styles.customContainerStyle}
-                            customIconContainer={styles.customIconContainer}
-                            customTitleStyle={styles.customTitleStyle}
-                            title='Shop cho chó'
-                            iconColor={colors.purple}
-                        />                       
+                        />                             
+                        {
+                            listOfParentCategories.map(item => (
+                                 <Category 
+                                    icon='paw'
+                                    customContainerStyle={styles.customContainerStyle}
+                                    customIconContainer={styles.customIconContainer}
+                                    customTitleStyle={styles.customTitleStyle}
+                                    title={item.name}
+                                    iconColor={colors.purple}
+                                    key={item._id.toString()}
+                                /> 
+                            ))
+                        }            
                     </ScrollView>
                 </View>
                 <View style={styles.categoryContainer}>
-                    <Text style={{
-                        width: '100%', 
-                        marginBottom: 5, 
-                        marginLeft: 5, 
-                        fontSize: 16}}>
-                            Tất cả danh mục
-                    </Text>
                     <ScrollView 
                         //style={{maxHeight: 1000}}
                     >
                         <View style={styles.categoryWrapper}>
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó chos chos chos chos' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó chos chos chso' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
-                            <Card 
-                                title='Thức ăn cho chó con' 
-                                customContainerStyle={styles.customContainerCard}
-                                customTitleStyle={styles.customTitleCard}
-                            />
+                            <Text style={{
+                                width: '100%', 
+                                marginTop: 5, 
+                                marginLeft: 10, 
+                                fontSize: 16}}>
+                                    Tất cả danh mục
+                            </Text>
+                            {
+                                listOfCategories.map(item => (
+                                    <Card 
+                                        title={item.name} 
+                                        customContainerStyle={styles.customContainerCard}
+                                        customTitleStyle={styles.customTitleCard}
+                                        onPress={() => navigation.navigate('Products')}
+                                    /> 
+                                ))
+                            }       
                         </View>
                     </ScrollView>
                 </View>
@@ -354,7 +122,8 @@ const styles = StyleSheet.create({
         elevation: 0,
     },
     customTitleCard: {
-        fontSize: 10
+        fontSize: 10,
+        textAlign: 'center'
     },
     customContainerStyle: {
         borderBottomColor: colors.medium,
@@ -371,9 +140,10 @@ const styles = StyleSheet.create({
     },
     categoryWrapper: {
         width: '100%',
+        height: '100%',
         backgroundColor: colors.white,
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
     parentCategory: {
         backgroundColor: '#FF797911',
