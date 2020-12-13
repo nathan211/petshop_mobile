@@ -34,7 +34,6 @@ export default function CategoryScreen({ navigation }) {
             const result = await categoryApi.getListOfCategories();
             if(result.ok){
                 setListOfCategories(result.data);
-                console.log(result.data);
             }
         } catch (error) {
             console.log(error);
@@ -93,7 +92,8 @@ export default function CategoryScreen({ navigation }) {
                                         title={item.name} 
                                         customContainerStyle={styles.customContainerCard}
                                         customTitleStyle={styles.customTitleCard}
-                                        onPress={() => navigation.navigate('Products')}
+                                        onPress={() => navigation.navigate('Products', item._id)}
+                                        key={item._id.toString()}
                                     /> 
                                 ))
                             }       
