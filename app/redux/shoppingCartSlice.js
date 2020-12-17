@@ -4,6 +4,7 @@ const shoppingCartSlice = createSlice({
     name: 'cart',
     initialState: {
         cartItems: [],
+        totalMoney: null
     },
     reducers: {
         addToCart: {
@@ -20,7 +21,13 @@ const shoppingCartSlice = createSlice({
 
                 if(!productAlreadyInCart){
                     state.cartItems.push(product);
-                }                
+                }    
+                
+                let total = 0;
+                state.cartItems.map(item => {
+                    total += item.price * item.cartCounter;
+                })
+                state.totalMoney = total;
             },
             prepare(product){
                 return { payload: { product } };
@@ -34,6 +41,12 @@ const shoppingCartSlice = createSlice({
                         item.cartCounter--;
                     }
                 });
+
+                let total = 0;
+                state.cartItems.map(item => {
+                    total += item.price * item.cartCounter;
+                })
+                state.totalMoney = total;
             },
             prepare(id){
                 return { payload: { id } };
@@ -47,13 +60,22 @@ const shoppingCartSlice = createSlice({
                         item.cartCounter++;
                     }
                 });
+
+                let total = 0;
+                state.cartItems.map(item => {
+                    total += item.price * item.cartCounter;
+                })
+                state.totalMoney = total;
             },
             prepare(id){
                 return { payload: { id } };
             }
-        }
+        },
     }
 });
 
-export const { addToCart, decreaseHandler, increaseHandler } = shoppingCartSlice.actions;
+export const { 
+    addToCart, 
+    decreaseHandler, 
+    increaseHandler, } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;

@@ -36,7 +36,9 @@ export default function CartItem({
                         />
                     </View>
                 </View>
-                <TouchableWithoutFeedback style={styles.deleteContainer}>
+                <TouchableWithoutFeedback 
+                    onPress={onDelete}
+                    style={styles.deleteContainer}>
                     <Text customStyle={styles.delete}>Xóa</Text>
                 </TouchableWithoutFeedback>
             </View>

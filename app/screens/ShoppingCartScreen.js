@@ -13,7 +13,9 @@ function ShoppingCartScreen({
     navigation, 
     cartItems, 
     decreaseHandler, 
-    increaseHandler, }) {
+    increaseHandler,
+    totalMoney }) {
+
     return (
         <View style={styles.container}>
              <View style={styles.header}>
@@ -66,7 +68,7 @@ function ShoppingCartScreen({
             <View style={styles.orderContainer}>
                 <View style={styles.totalContainer}>
                     <Text customStyle={styles.totalTitle}>Tổng tiền</Text>
-                    <Text customStyle={styles.total}>123456789</Text>
+                    <Text customStyle={styles.total}>{ totalMoney }</Text>
                 </View>
                 <Button 
                     title='tiến hành đặt hàng' 
@@ -159,7 +161,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        cartItems: state.cart.cartItems
+        cartItems: state.cart.cartItems,
+        totalMoney: state.cart.totalMoney
     }
 }
 

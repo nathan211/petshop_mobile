@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { 
+    StyleSheet, 
+    View, 
+    Image, 
+    ScrollView, 
+    TouchableWithoutFeedback,
+    Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
@@ -16,7 +22,23 @@ function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
     const handleAddToCart = () => {
         const product = route.params;
         addToCart(product);
+        createAlert();
     }
+
+    const createAlert = () =>
+    Alert.alert(
+      "Thông báo!",
+      "Sản phẩm đã được thêm vào giỏ hàng.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Xem giỏ hàng", onPress: () => navigation.navigate('ShoppingCart') }
+      ],
+      { cancelable: false }
+    );
 
     return (
         <View style={styles.container}>

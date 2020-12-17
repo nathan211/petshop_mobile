@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { StyleSheet, View, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
@@ -11,8 +11,7 @@ import OrderItem from '../components/OrderItem';
 import orderApi from '../api/order';
 import orderDetailsApi from '../api/orderDetails';
 
-function OrderScreen({ navigation, cartItems, currentUser }) {
-    const [totalMoney, setTotalMoney] = useState(123456789);
+function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
 
     const handleSubmit = async () => {
         try {
@@ -23,8 +22,9 @@ function OrderScreen({ navigation, cartItems, currentUser }) {
                 if(resultGetLatestOrder.ok){
                     const order = resultGetLatestOrder.data;
                     cartItems.forEach(item => {
-                        insert(order._id, item._id, item.cartCounter);
+                        insertOrderDetails(order._id, item._id, item.cartCounter);
                     });
+                    createAlert();
                 }
             }
         } catch (error) {
@@ -32,10 +32,25 @@ function OrderScreen({ navigation, cartItems, currentUser }) {
         }
     }
 
-    const insert = async (orderId, productId, amount )=> {
+    const insertOrderDetails = async (orderId, productId, amount )=> {
         const res = await orderDetailsApi.insertOrderDetails(orderId, productId, amount);
         console.log('order details: ', res.data);
     }
+
+    const createAlert = () =>
+    Alert.alert(
+      "Thông báo!",
+      "Đặt hàng thành công.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Tiếp tục mua sắm", onPress: () => navigation.navigate('Home') }
+      ],
+      { cancelable: false }
+    );
     
     return (
         <View style={styles.container}>
@@ -89,7 +104,7 @@ function OrderScreen({ navigation, cartItems, currentUser }) {
             <View style={styles.orderContainer}>
                 <View style={styles.totalContainer}>
                     <Text customStyle={styles.totalTitle}>Tổng tiền</Text>
-                    <Text customStyle={styles.total}>123456789</Text>
+                    <Text customStyle={styles.total}>{ totalMoney }</Text>
                 </View>
                 <Button 
                     title='đặt hàng' 
@@ -183,7 +198,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         cartItems: state.cart.cartItems,
-        currentUser: state.auth.currentUser
+        currentUser: state.auth.currentUser,
+        totalMoney: state.cart.totalMoney
     }
 }
 
