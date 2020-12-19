@@ -26,7 +26,7 @@ function ShoppingCartScreen({
                         <Icon 
                             name='chevron-circle-left'
                             size={40}
-                            color={colors.grey}
+                            color={colors.white}
                         />
                     </TouchableWithoutFeedback>
                 </View>
@@ -34,6 +34,7 @@ function ShoppingCartScreen({
                     width: '100%',
                     textAlign: 'center',
                     paddingRight: 80,
+                    color: colors.white,
                 }}>Giỏ hàng({cartItems.length})</Text>
             </View>
             <ScrollView style={styles.cartContainer}>
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     header: {
         height: 45,
         flexDirection: 'row',
-        backgroundColor: colors.white,
+        backgroundColor: colors.pink,
         padding: 5,
         alignItems: 'center',
     },

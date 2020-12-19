@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Avatar, Accessory } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
+import { connect } from 'react-redux';
 
 import colors from '../config/colors';
 import Chatting from '../components/Chatting';
@@ -8,8 +9,9 @@ import ShoppingCart from '../components/ShoppingCart';
 import Setting from '../components/Setting';
 import Text from '../components/Text';
 import ListItem from '../components/ListItem';
+import { signOut } from '../redux/authSlice';
 
-export default function SearchScreen() {
+function SearchScreen({ currentUser, signOut }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -28,8 +30,8 @@ export default function SearchScreen() {
                         rounded
                     />
                     <View style={styles.accountContainer}>
-                        <Text style={styles.fullName}>Nguyễn Việt Phi</Text>
-                        <Text style={styles.email}>fi@gmail.com</Text>
+                        <Text style={styles.fullName}>{ currentUser.fullName }</Text>
+                        <Text style={styles.email}>{ currentUser.email }</Text>
                     </View>
                 </View>
             </View>
@@ -54,7 +56,7 @@ export default function SearchScreen() {
                     title='Đăng xuất' 
                     leftIcon='sign-out' 
                     leftIconColor={colors.brown}
-                    onPress={() => console.log('work')}
+                    onPress={() => signOut()}
                 />
             </View>
         </View>
@@ -97,3 +99,15 @@ const styles = StyleSheet.create({
         color: colors.white
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        currentUser: state.auth.currentUser,
+    }
+}
+
+const mapDispatch = {
+    signOut,
+}
+
+export default connect(mapStateToProps, mapDispatch)(SearchScreen)

@@ -1,33 +1,35 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
 
 import colors from '../config/colors';
 import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
 
-export default function BookingScreen() {
+export default function BookingScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.spaAndGrooming}>Spa & Grooming</Text>
                 <View style={styles.iconContainer}>
                     <ShoppingCart onPress={() => navigation.navigate('ShoppingCart')} />
-                    <Chatting onPress={() => console.log('go to chatting')} />
+                    <Chatting onPress={() => console.log('go to chatting')} /> 
                 </View>
             </View>
-            <View style={styles.bookingContainer}>
-                <View style={styles.booking}>
-                    <Image 
-                        style={styles.image} 
-                        source={require('../assets/images/grooming1.jpg')} 
-                    />
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.name}>Combo trọn gói tắm & tạo kiểu</Text>
-                        <Text style={styles.price}>234567</Text>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('BookingDetails')}>
+                <View  style={styles.bookingContainer}>
+                    <View style={styles.booking}>
+                        <Image 
+                            style={styles.image} 
+                            source={require('../assets/images/grooming1.jpg')} 
+                        />
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.name}>Combo trọn gói tắm & tạo kiểu</Text>
+                            <Text style={styles.price}>234567</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         </View>
     )
 }

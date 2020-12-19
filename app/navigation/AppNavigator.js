@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import AccountScreen from '../screens/AccountScreen';
-import BookingScreen from '../screens/BookingScreen';
+import BookingNavigator from '../navigation/BookingNavigator';
 import CategoryScreen from '../screens/CategoryScreen';
 import SearchScreen from '../screens/SearchScreen';
 import HomeNavigator from './HomeNavigator';
@@ -59,7 +59,7 @@ export default function AppNavigator() {
             />
             <Tab.Screen
                 name='Booking'
-                component={BookingScreen}
+                component={BookingNavigator}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon 

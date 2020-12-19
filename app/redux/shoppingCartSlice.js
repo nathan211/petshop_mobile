@@ -71,6 +71,11 @@ const shoppingCartSlice = createSlice({
                 return { payload: { id } };
             }
         },
+        deleteHandler: {
+            reducer(state, action){
+                
+            }
+        }
     }
 });
 
