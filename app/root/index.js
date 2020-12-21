@@ -25,6 +25,7 @@ function Root({ currentUser, signIn }) {
             signIn(token, user.info);
             setIsLoading(false);
         } catch (error) {
+            setIsLoading(false);
             console.log(error);
         }
     } 
