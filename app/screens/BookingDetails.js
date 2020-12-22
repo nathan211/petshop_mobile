@@ -13,17 +13,17 @@ import bookingApi from '../api/booking';
 
 export default function BookingDetails({ navigation }) {
     const bookingTime = [
-        8, 9, 10
+        8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
     ];
     const [time, setTime] = useState([]);
     const [isSelected, setIsSelected] = useState(0);
-    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDate, setSelectedDate] = useState(moment(new Date()).format('DD/MM/YYYY'));
     const [selectedTime, setSelectedTime] = useState();
     const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
     const [totalMoney, setTotalMoney] = useState(123456);
 
     useEffect(() => {
-        
+        renderSelectedDate(moment(new Date()).format('DD/MM/YYYY').toString());
     }, [])
 
     const handleSubmit = async () => {
@@ -75,9 +75,20 @@ export default function BookingDetails({ navigation }) {
             console.log({timeClone, result: result.data});
             setTime(timeClone);
         });
-    
+
+        setIsSelected(0);
         hideDateTimePicker();
     };
+
+    const renderSelectedDate = async (date) => {
+        await bookingApi.findSelectedDate(date).then(result => {
+            const timeClone = result.data.map(item => {
+                return item.bookedTime;
+            });
+            console.log({timeClone, result: result.data});
+            setTime(timeClone);
+        });
+    }
     
     const handleChooseTime = (item) => {
         setIsSelected(item);
@@ -120,15 +131,24 @@ export default function BookingDetails({ navigation }) {
                 <View style={styles.timeContainer}> 
                     {
                         bookingTime.map((item, key) => (
+                            time.includes(item) ?
                             <TimeItem 
                                 key={key}
-                                label={item} 
+                                label={item + ':00'} 
                                 onPress={() => handleChooseTime(item)}
-                                isSelected={time.includes(item) ? true : false}
+                                isSelected={ isSelected === item ? true : false}
+                                disable={styles.disable}
+                            /> : 
+                            <TimeItem 
+                                key={key}
+                                label={item + ':00'} 
+                                onPress={() => handleChooseTime(item)}
+                                isSelected={ isSelected === item ? true : false}
                             />
                         ))
                     }
                 </View>
+                <Text customStyle={styles.totalMoney}>Tổng tiền: {totalMoney}</Text>
                 <Button 
                     title='Xong' 
                     color='brown' 
@@ -179,4 +199,14 @@ const styles = StyleSheet.create({
         padding: 5,
         flexWrap: 'wrap',
     },   
+    disable: {
+        backgroundColor: colors.medium,
+        color: colors.white,
+    },
+    totalMoney: {
+        fontSize: 20,
+        color: colors.red,
+        fontWeight: 'bold',
+        marginTop: 10,
+    }
 })

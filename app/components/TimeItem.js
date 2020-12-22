@@ -1,16 +1,17 @@
 import React from 'react'
-import { StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 
 import colors from '../config/colors';
-
 import Text from '../components/Text';
 
-export default function TimeItem({ isSelected, onPress, label }) {
+export default function TimeItem({ isSelected, onPress, label, disable }) {
     return (
-        <TouchableWithoutFeedback onPress={onPress}>
-                { isSelected ?
-                <Text customStyle={styles.timeItemSelected}>{label}</Text> :
-                <Text customStyle={styles.timeItem}>{label}</Text>}
+        <TouchableWithoutFeedback 
+            onPress={onPress}
+            >
+            { isSelected ?
+            <Text customStyle={[styles.timeItemSelected, disable]}>{label}</Text> :
+            <Text customStyle={[styles.timeItem, disable]}>{label}</Text>}
         </TouchableWithoutFeedback> 
     )
 }
