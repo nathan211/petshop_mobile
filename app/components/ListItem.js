@@ -14,10 +14,7 @@ export default function ListItem({
         customContainer,
         onPress }) {
     return (
-        <TouchableWithoutFeedback 
-            
-            onPress={onPress}
-        >
+        <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, customContainer]}>
                 <View style={styles.leftContainer}>
                     <Icon 

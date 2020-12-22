@@ -3,9 +3,8 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import AccountScreen from '../screens/AccountScreen';
+import AccountNavigator from '../navigation/AccountNavigator';
 import BookingNavigator from '../navigation/BookingNavigator';
-import CategoryScreen from '../screens/CategoryScreen';
 import SearchScreen from '../screens/SearchScreen';
 import HomeNavigator from './HomeNavigator';
 import CategoryNavigator from './CategoryNavigator';
@@ -73,7 +72,7 @@ export default function AppNavigator() {
             />
             <Tab.Screen
                 name='Account'
-                component={AccountScreen}
+                component={AccountNavigator}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon 

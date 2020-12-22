@@ -11,7 +11,7 @@ import Text from '../components/Text';
 import ListItem from '../components/ListItem';
 import { signOut } from '../redux/authSlice';
 
-function SearchScreen({ currentUser, signOut }) {
+function SearchScreen({ currentUser, signOut, navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -42,11 +42,19 @@ function SearchScreen({ currentUser, signOut }) {
                     leftIconColor={colors.brown}
                     rightIcon='chevron-right'
                     rightIconColor={colors.brown}
-                    onPress={() => console.log('work')}
+                    onPress={() => navigation.navigate('ProfileEdit')}
                 />
                 <ListItem 
                     title='Quản lý đơn hàng' 
                     leftIcon='list-alt' 
+                    leftIconColor={colors.brown}
+                    rightIcon='chevron-right'
+                    rightIconColor={colors.brown}
+                    onPress={() => console.log('work')}
+                />
+                <ListItem 
+                    title='Lịch hẹn' 
+                    leftIcon='calendar' 
                     leftIconColor={colors.brown}
                     rightIcon='chevron-right'
                     rightIconColor={colors.brown}

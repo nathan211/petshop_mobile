@@ -28,11 +28,10 @@ export default function BookingDetails({ navigation }) {
 
     const handleSubmit = async () => {
         try {
-            console.log('submitted');
-            console.log(selectedDate, selectedTime, totalMoney);
             const result = await bookingApi.insertBooking(selectedDate, selectedTime, totalMoney);
             if(result.ok){
                 createAlert();
+                renderSelectedDate(moment(new Date()).format('DD/MM/YYYY').toString());
             } 
         } catch (error) {
             console.log(error);
@@ -72,7 +71,6 @@ export default function BookingDetails({ navigation }) {
             const timeClone = result.data.map(item => {
                 return item.bookedTime;
             });
-            console.log({timeClone, result: result.data});
             setTime(timeClone);
         });
 
@@ -85,7 +83,6 @@ export default function BookingDetails({ navigation }) {
             const timeClone = result.data.map(item => {
                 return item.bookedTime;
             });
-            console.log({timeClone, result: result.data});
             setTime(timeClone);
         });
     }
