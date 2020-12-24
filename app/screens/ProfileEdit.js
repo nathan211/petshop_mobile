@@ -10,23 +10,22 @@ import {
     ErrorMessage, 
 } from '../components/forms';
 import colors from '../config/colors';
-import Text from '../components/Text';
-    
+import Text from '../components/Text';    
 
 const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Bạn chưa nhập họ và tên'),
     address: Yup.string().required('Bạn chưa nhập địa chỉ'),
     phoneNumber: Yup.string().required('Bạn chưa nhập số điện thoại'),
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
-    // password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
-    // confirmPassword: Yup.string().required('Bạn chưa nhập lại mật khẩu')
-    //     .min(6, 'Mật khẩu phải lớn hơn 6 ký tự')
-    //     .test('confirmPassword','Mật khẩu xác nhận không chính xác!', function(value) {
-    //     return this.parent.password === value;
-    //}),
+    password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
+    confirmPassword: Yup.string().required('Bạn chưa nhập lại mật khẩu')
+        .min(6, 'Mật khẩu phải lớn hơn 6 ký tự')
+        .test('confirmPassword','Mật khẩu xác nhận không chính xác!', function(value) {
+        return this.parent.password === value;
+    }),
 });
 
-export default function ProfileEdit({}) {
+export default function ProfileEdit({ navigation }) {
     const [updateFailed, setUpdateFailed] = useState(false);
 
     const handleSubmit = async ({fullName, address, phoneNumber, email}) => {
@@ -55,80 +54,152 @@ export default function ProfileEdit({}) {
                    color: colors.white,
                 }}>Cập nhật thông tin</Text>
             </View>
-            <Form
-                initialValues={{
-                    fullName: '',
-                    address: '',
-                    phoneNumber: '',
-                    email: '', 
-                    // password: '',
-                    // confirmPassword: ''
-                }}
-                validationShema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                <ErrorMessage 
-                    visible={updateFailed}
-                    error="Đăng ký không thành công!"
-                />
-                <FormField 
-                    autoCorrect={false}
-                    autoCapitalize='none'
-                    icon='user'
-                    name='fullName'
-                    placeholder='Họ và tên'
-                />
-                <FormField 
-                        autoCorrect={false}
-                        autoCapitalize='none'
-                        icon='address-book'
-                        name='address'
-                        placeholder='Địa chỉ'
-                    />
-                <FormField 
-                    autoCorrect={false}
-                    autoCapitalize='none'
-                    icon='phone'
-                    name='phoneNumber'
-                    placeholder='Số điện thoại'
-                    keyboardType='numeric'
-                />
-                <FormField 
-                    autoCorrect={false}
-                    autoCapitalize='none'
-                    icon='envelope'
-                    name='email'
-                    keyboardType='email-address'
-                    placeholder='Email'
-                    textContentType='emailAddress'
-                />
-                <FormField 
-                    autoCorrect={false}
-                    autoCapitalize='none'
-                    icon='lock'
-                    name='password'
-                    placeholder='Mật khẩu'
-                    textContentType='password'
-                    secureTextEntry
-                />
-                <FormField 
-                    autoCorrect={false}
-                    autoCapitalize='none'
-                    icon='lock'
-                    name='confirmPassword'
-                    placeholder='Nhập lại mật khẩu'
-                    textContentType='password'
-                    secureTextEntry
-                />
-                <SubmitButton title='đăng ký'/>
-            </Form>
+            <View style={styles.content}>
+                <View style={styles.inputContainer}>
+                    <Form
+                        initialValues={{
+                            fullName: '',
+                            address: '',
+                            phoneNumber: '',
+                            email: '', 
+                        }}
+                        validationShema={validationSchema}
+                        onSubmit={handleSubmit}
+                    >
+                        <ErrorMessage 
+                            visible={updateFailed}
+                            error="Cập nhật không thành công!"
+                        />
+                        <FormField 
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            icon='user'
+                            name='fullName'
+                            placeholder='Họ và tên'
+                            customContainerStyle={styles.customInputContainer}
+                            customInputStyle={styles.customInput}
+                            customInputStyle={styles.customInput}
+                            placeholderTextColor={colors.medium} 
+                            iconColor={colors.medium}
+                        />
+                        <FormField 
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            icon='address-book'
+                            name='address'
+                            placeholder='Địa chỉ'
+                            customContainerStyle={styles.customInputContainer}
+                            customInputStyle={styles.customInput}
+                            placeholderTextColor={colors.medium} 
+                            iconColor={colors.medium}
+                        />
+                        <FormField 
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            icon='phone'
+                            name='phoneNumber'
+                            placeholder='Số điện thoại'
+                            keyboardType='numeric'
+                            customContainerStyle={styles.customInputContainer}
+                            customInputStyle={styles.customInput}
+                            placeholderTextColor={colors.medium}
+                            iconColor={colors.medium} 
+                        />
+                        <FormField 
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            icon='envelope'
+                            name='email'
+                            keyboardType='email-address'
+                            placeholder='Email'
+                            textContentType='emailAddress'
+                            customContainerStyle={styles.customInputContainer}
+                            customInputStyle={styles.customInput}
+                            placeholderTextColor={colors.medium} 
+                            iconColor={colors.medium}
+                        />
+                        <SubmitButton 
+                            title='Cập nhật' 
+                            customTitleStyle={styles.customTitleButton}
+                            color='brown'
+                            customTitleStyle={styles.customTitleButton}
+                        />
+                    </Form>
+                </View>
+                <View style={styles.inputContainer}>
+                    <Form
+                        initialValues={{
+                            password: '',
+                            confirmPassword: ''
+                        }}
+                        validationShema={validationSchema}
+                        onSubmit={handleSubmit}
+                    >
+                        <ErrorMessage 
+                            visible={updateFailed}
+                            error="Đỗi mật khẩu không thành công!"
+                        />
+                        
+                        <FormField 
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            icon='lock'
+                            name='password'
+                            placeholder='Mật khẩu'
+                            textContentType='password'
+                            secureTextEntry
+                            customContainerStyle={styles.customInputContainer}
+                            customContainerStyle={styles.customInputContainer}
+                            customInputStyle={styles.customInput}
+                            placeholderTextColor={colors.medium} 
+                            iconColor={colors.medium}
+                        />
+                        <FormField 
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            icon='lock'
+                            name='confirmPassword'
+                            placeholder='Nhập lại mật khẩu'
+                            textContentType='password'
+                            secureTextEntry
+                            customContainerStyle={styles.customInputContainer}
+                            customContainerStyle={styles.customInputContainer}
+                            customInputStyle={styles.customInput}
+                            placeholderTextColor={colors.medium} 
+                            iconColor={colors.medium}
+                        />
+                        <SubmitButton 
+                            title='Đỗi mật khẩu' 
+                            customTitleStyle={styles.customTitleButton}
+                            color='brown'
+                            customTitleStyle={styles.customTitleButton}
+                        />
+                    </Form>
+                </View>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    content: {
+        padding: 10,
+    },
+    customTitleButton: {
+        color: colors.white,
+    },
     container: {
-        backgroundColor: colors.pink
+        backgroundColor: colors.lightPink,
+    },
+    customInput: {
+        fontSize: 16,
+    },
+    customInputContainer: {
+        borderWidth: 0,
+        backgroundColor: colors.lightPink,
+        borderRadius: 0,
+        borderTopStartRadius: 10,
+        borderTopRightRadius: 10
     },
     header: {
         height: 60,
@@ -140,4 +211,10 @@ const styles = StyleSheet.create({
     iconBackContainer: {
         width: '10%'
     },
+    inputContainer: {
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: colors.white,
+        marginBottom: 10
+    }
 })

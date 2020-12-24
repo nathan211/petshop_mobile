@@ -10,6 +10,7 @@ import ShoppingCart from '../components/ShoppingCart';
 import SearchBar from '../components/SearchBar';
 import productApi from '../api/product';
 import categoryApi from '../api/category';
+import numberFormatter from '../utilities/numberFormatter'
 
 export default function HomeScreen({ navigation }) {
     const [listOfProducts, setListOfProducts] = useState([]);
@@ -73,7 +74,7 @@ export default function HomeScreen({ navigation }) {
                             return (
                                 <Card 
                                     title={item.name} 
-                                    subTitle={item.price} 
+                                    subTitle={numberFormatter(item.price) + ' ₫'} 
                                     onPress={() => navigation.navigate('ProductDetails', item)}
                                 />
                             );

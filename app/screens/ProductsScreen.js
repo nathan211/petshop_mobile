@@ -8,6 +8,7 @@ import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
 import productApi from '../api/product';
+import numberFormatter from '../utilities/numberFormatter';
 
 export default function CategoryScreen({ navigation, route }) {
     const [listOfProducts, setListOfProducts] = useState([]);
@@ -51,7 +52,7 @@ export default function CategoryScreen({ navigation, route }) {
                 renderItem={({item}) => (
                         <Card 
                             title={item.name}
-                            subTitle={item.price} 
+                            subTitle={numberFormatter(item.price) + ' ₫'} 
                             onPress={() => navigation.navigate('ProductDetails', item)}
                             customContainerStyle={styles.customCardContainer}
                             customTitleStyle={styles.customCardTitle}

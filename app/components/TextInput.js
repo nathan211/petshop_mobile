@@ -44,5 +44,5 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginHorizontal: 10,
-    }
+    },
 })

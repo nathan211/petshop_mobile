@@ -3,9 +3,13 @@ import { useFormikContext } from 'formik';
 
 import Button from '../Button';
  
-export default function SubmitButton({ title }) {
+export default function SubmitButton({ title, ...ortherProps }) {
     const { handleSubmit } = useFormikContext();
     return (
-        <Button title={title} onPress={handleSubmit} />
+        <Button 
+            title={title} 
+            onPress={handleSubmit} 
+            {...ortherProps} 
+        />
     );
 }

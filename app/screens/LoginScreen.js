@@ -15,7 +15,7 @@ import { storeUserToken } from '../api/ManagerStorage';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
-    password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
+    password: Yup.string().required('Bạn chưa nhập mật khẩu'),
 });
 
 function LoginScreen({ navigation, signIn }) {

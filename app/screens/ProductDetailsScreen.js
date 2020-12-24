@@ -15,6 +15,7 @@ import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
 import { addToCart } from '../redux/shoppingCartSlice';
+import numberFormatter from '../utilities/numberFormatter';
 
 function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
     const { name, price, quantity, description } = route.params;
@@ -76,7 +77,7 @@ function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
                     >
                         { name }
                     </Text>
-                    <Text customStyle={styles.price}>{ price }</Text>
+                    <Text customStyle={styles.price}>{ numberFormatter(price) + ' ₫' }</Text>
                 </View>
                 <View style={styles.detailsContainer}>
                     <Text customStyle={styles.title}>Thông tin chi tiết</Text>
