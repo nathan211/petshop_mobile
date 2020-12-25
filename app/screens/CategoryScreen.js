@@ -18,6 +18,18 @@ export default function CategoryScreen({ navigation }) {
         getListOfCategories();
     }, []);
 
+    const handleCategoryPress = async (categoryId) => {
+        try {
+            const result = await categoryApi.getCategoryByParentId(categoryId);
+            if(result.ok){
+                console.log(result.data);
+                setListOfCategories(result.data);
+            }   
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const getListOfParentCategories = async () => {
         try {
             const result = await parentCategoryApi.getListOfParentCategories();
@@ -69,6 +81,7 @@ export default function CategoryScreen({ navigation }) {
                                     title={item.name}
                                     iconColor={colors.purple}
                                     key={item._id.toString()}
+                                    onPress={() => handleCategoryPress(item._id)}
                                 /> 
                             ))
                         }            

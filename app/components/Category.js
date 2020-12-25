@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import colors from '../config/colors'
@@ -11,23 +11,26 @@ export default function Category({
         customIconContainer, 
         icon,
         iconColor='#803C6D',
-        title }) {
+        title,
+        onPress, }) {
     return (
-        <View style={[styles.container, customContainerStyle]}>            
-            <View style={[styles.iconContainer, customIconContainer]}>
-                <Icon
-                    name={icon}
-                    size={30}
-                    color={iconColor}
-                />
-            </View>
-            <Text 
-                customStyle={[styles.categoryTitle, customTitleStyle]}
-                numberOfLines={1}
-            >
-                {title}
-            </Text>
-        </View>       
+        <TouchableWithoutFeedback onPress={onPress}>
+            <View style={[styles.container, customContainerStyle]}>            
+                <View style={[styles.iconContainer, customIconContainer]}>
+                    <Icon
+                        name={icon}
+                        size={30}
+                        color={iconColor}
+                    />
+                </View>
+                <Text 
+                    customStyle={[styles.categoryTitle, customTitleStyle]}
+                    numberOfLines={1}
+                >
+                    {title}
+                </Text>
+            </View>    
+        </TouchableWithoutFeedback>   
     )
 }
 

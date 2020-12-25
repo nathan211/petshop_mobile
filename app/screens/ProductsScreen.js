@@ -45,22 +45,22 @@ export default function CategoryScreen({ navigation, route }) {
                 <SearchBar customStyle={styles.customSearchBarStyle} />
                 <ShoppingCart onPress={() => navigation.navigate('ShoppingCart')} />
             </View>
-            <FlatList 
-                style={styles.cardContainer}
-                data={listOfProducts}
-                keyExtractor={item => item._id.toString()}
-                renderItem={({item}) => (
+            <ScrollView>
+                <View  style={styles.cardContainer}>
+                {
+                    listOfProducts.map((item) => (
                         <Card 
                             title={item.name}
                             subTitle={numberFormatter(item.price) + ' ₫'} 
                             onPress={() => navigation.navigate('ProductDetails', item)}
                             customContainerStyle={styles.customCardContainer}
                             customTitleStyle={styles.customCardTitle}
-                            keyExtractor={item._id}
-                            />
-                    )}
-                numColumns={2}
-            />
+                            key={item._id}
+                        />
+                    ))
+                }
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -68,7 +68,10 @@ export default function CategoryScreen({ navigation, route }) {
 const styles = StyleSheet.create({
     container: {},
     cardContainer: {
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        marginBottom: 70,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
     header: {
         height: 60,
@@ -92,8 +95,8 @@ const styles = StyleSheet.create({
         width: '10%'
     },
     customCardContainer: {
+        width: 175,
         height: 250,    
         elevation: 0,
-        flex: 1
     }
 });

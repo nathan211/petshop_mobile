@@ -57,7 +57,11 @@ export default function HomeScreen({ navigation }) {
                         keyExtractor={item => item._id.toString()}
                         renderItem={({item}) => {
                             return (
-                                <Category title={item.name} icon='paw' />
+                                <Category 
+                                    title={item.name} 
+                                    icon='paw' 
+                                    onPress={() => navigation.navigate('Products', item._id)}
+                                />
                             );
                         }}
                         showsHorizontalScrollIndicator={false} 
