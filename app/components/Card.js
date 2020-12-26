@@ -10,7 +10,8 @@ export default function Card({
         subTitle, 
         customContainerStyle,
         customTitleStyle,
-        onPress }) {
+        onPress,
+        imageUrl }) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, customContainerStyle]}>

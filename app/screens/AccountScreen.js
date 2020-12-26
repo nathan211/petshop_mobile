@@ -58,7 +58,7 @@ function SearchScreen({ currentUser, signOut, navigation }) {
                     leftIconColor={colors.brown}
                     rightIcon='chevron-right'
                     rightIconColor={colors.brown}
-                    onPress={() => console.log('work')}
+                    onPress={() => navigation.navigate('BookingManager')}
                 />
                 <ListItem 
                     title='Đăng xuất' 
