@@ -1,25 +1,44 @@
 import React from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Button from '../components/Button';
 import colors from '../config/colors';
 import Text from '../components/Text';
+import numberFormatter from '../utilities/numberFormatter';
 
-export default function CartItem({ name, cartCounter, price,}) {
+export default function CartItem({ 
+    name, 
+    cartCounter,
+    price, 
+    details, 
+    onRightAction,
+    onPress}) {
     return (
-        <TouchableWithoutFeedback onPress={() => console.log('go to details')}>
+        <TouchableWithoutFeedback onPress={onPress}>
             <View style={styles.container}>
                 <Image 
                     style={styles.image}
                     source={require('../assets/images/product.jpg')} 
+                    resizeMode='contain'
                 />
-                <View style={styles.nameContainer}>
+                <View style={styles.infoContainer}>
                     <Text>{ name }</Text>
-                    <Text>{ price }</Text>
+                    <Text customStyle={styles.customPrice}>{numberFormatter(price) + ' ₫' }</Text>
                     <View style={styles.counterContainer}>
-                        <Text customStyle={styles.counter}>{ 'SL: ' + cartCounter }</Text>
+                        <Text customStyle={styles.counter}>{ 'Số lượng: ' + cartCounter }</Text>
                     </View>
                 </View>
+                {
+                    details ?
+                    <TouchableWithoutFeedback onPress={onRightAction}>
+                        <Text customStyle={styles.viewDetails}>
+                            <Icon 
+                                name='chevron-right'
+                                size={15}
+                            />
+                        </Text>
+                    </TouchableWithoutFeedback> : null
+                }
             </View>
         </TouchableWithoutFeedback>
     )
@@ -32,18 +51,27 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         marginTop: 5,
         width: '100%',
-        height: 120,
+        height: 100,
         flexDirection: 'row',
+    },
+    customPrice: {
+        color: colors.red,
+        fontWeight: 'bold',
     },
     counterContainer: {
     },
+    viewDetails: {
+        paddingTop: 42,
+        paddingRight: 5,
+        color: colors.medium
+    },
     image: {
         width: '30%',
-        height: 120,
+        height: 100,
     },
-    nameContainer: {
+    infoContainer: {
         flex: 1,
         justifyContent: 'space-between',
         paddingVertical: 10
-    }
+    },
 })

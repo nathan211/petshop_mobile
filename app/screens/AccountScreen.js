@@ -23,7 +23,7 @@ function SearchScreen({ currentUser, signOut, navigation }) {
                 <View style={styles.customerInfo}>
                     <Avatar
                         size="large"
-                        icon={{ name: 'face' }}
+                        icon={{name: 'user', type: 'font-awesome'}}
                         onPress={() => console.log("Works!")}
                         activeOpacity={0.7}
                         containerStyle={styles.avatar}
@@ -50,7 +50,7 @@ function SearchScreen({ currentUser, signOut, navigation }) {
                     leftIconColor={colors.brown}
                     rightIcon='chevron-right'
                     rightIconColor={colors.brown}
-                    onPress={() => console.log('work')}
+                    onPress={() => navigation.navigate('OrderManager')}
                 />
                 <ListItem 
                     title='Lịch hẹn' 

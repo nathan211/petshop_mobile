@@ -11,7 +11,7 @@ export default function CartItem({
     price,
     onDecrease,
     onIncrease,
-    onDelete}) {
+    onRightAction}) {
     return (
         <TouchableWithoutFeedback onPress={() => console.log('go to details')}>
             <View style={styles.container}>
@@ -37,7 +37,7 @@ export default function CartItem({
                     </View>
                 </View>
                 <TouchableWithoutFeedback 
-                    onPress={onDelete}
+                    onPress={onRightAction}
                     style={styles.deleteContainer}>
                     <Text customStyle={styles.delete}>Xóa</Text>
                 </TouchableWithoutFeedback>

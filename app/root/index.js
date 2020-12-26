@@ -30,9 +30,9 @@ function Root({ currentUser, signIn }) {
         }
     } 
 
-    // if(isLoading){
-    //     return <ActivityIndicator />
-    // }
+    if(isLoading){
+        return <ActivityIndicator />
+    }
  
     return (
         <NavigationContainer theme={navigationTheme}>

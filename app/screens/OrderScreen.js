@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
-import Text from '../components/Text';
+import Header from '../components/Header';
 import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
 import OrderItem from '../components/OrderItem';
 import orderApi from '../api/order';
 import orderDetailsApi from '../api/orderDetails';
+import Text from '../components/Text';
+import numberFormatter from '../utilities/numberFormatter';
+import CustomerInfomation from '../components/CustomerInfomation';
 
 function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
 
@@ -54,40 +57,12 @@ function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
     
     return (
         <View style={styles.container}>
-             <View style={styles.header}>
-                <View style={styles.iconBackContainer}>
-                    <TouchableWithoutFeedback 
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Icon 
-                            name='chevron-circle-left'
-                            size={40}
-                            color={colors.grey}
-                        />
-                    </TouchableWithoutFeedback>
-                </View>
-                <Text customStyle={{
-                    width: '100%',
-                    textAlign: 'center',
-                    paddingRight: 80,
-                }}>Xác nhận đơn hàng</Text>
-            </View>
+            <Header 
+                title='Xác nhận đơn hàng' 
+                onPress={() => navigation.goBack()}
+            />
             <ScrollView style={styles.cartContainer}>
-                <View style={styles.addressContainer}>
-                    <View style={styles.addressWrapper}>
-                        <Text customStyle={styles.addressTitle}>Địa chỉ giao hàng</Text>
-                        <Text customStyle={styles.name}>
-                            {currentUser.fullName + ' - ' + currentUser.phoneNumber}
-                        </Text>
-                        <Text customStyle={styles.address}>{currentUser.address}</Text>
-                    </View>
-                    <TouchableWithoutFeedback 
-                        style={styles.deleteContainer}
-                        onPress={() => console.log('delete')}
-                    >
-                        <Text customStyle={styles.delete}>Sửa</Text>
-                    </TouchableWithoutFeedback>
-                </View>
+               <CustomerInfomation />
                 { 
                     cartItems.map(item => {
                         return (
@@ -104,7 +79,7 @@ function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
             <View style={styles.orderContainer}>
                 <View style={styles.totalContainer}>
                     <Text customStyle={styles.totalTitle}>Tổng tiền</Text>
-                    <Text customStyle={styles.total}>{ totalMoney }</Text>
+                    <Text customStyle={styles.total}>{ numberFormatter(totalMoney) + ' ₫' }</Text>
                 </View>
                 <Button 
                     title='đặt hàng' 
@@ -122,23 +97,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    addressContainer: {
-        backgroundColor: colors.white,
-        width: '100%',
-        height: 80,
-        padding: 10,
-        justifyContent: 'center',
-        flexDirection: 'row'
-    },
-    addressTitle: {
-        fontSize: 14
-    },
-    address: {
-        fontSize: 15
-    },
-    addressWrapper: {
-        flex: 1
-    },
     customButtonTitle: {
         color: colors.white
     },
@@ -152,13 +110,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    delete: {
-        color: colors.secondary,
-        fontSize: 14
-    },
-    name: {
-        fontWeight: 'bold'
     },
     header: {
         height: 45,
