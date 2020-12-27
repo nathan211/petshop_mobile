@@ -9,6 +9,7 @@ import numberFormatter from '../utilities/numberFormatter';
 export default function CartItem({ 
     name, 
     cartCounter,
+    customNameStyle,
     price, 
     details, 
     onRightAction,
@@ -22,10 +23,10 @@ export default function CartItem({
                     resizeMode='contain'
                 />
                 <View style={styles.infoContainer}>
-                    <Text>{ name }</Text>
+                    <Text style={[styles.name, customNameStyle]}>{ name }</Text>
                     <Text customStyle={styles.customPrice}>{numberFormatter(price) + ' ₫' }</Text>
                     <View style={styles.counterContainer}>
-                        <Text customStyle={styles.counter}>{ 'Số lượng: ' + cartCounter }</Text>
+                        <Text customStyle={styles.counter}>{ cartCounter }</Text>
                     </View>
                 </View>
                 {
@@ -74,4 +75,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 10
     },
+    name: {
+
+    }
 })

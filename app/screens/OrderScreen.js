@@ -18,6 +18,7 @@ function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
 
     const handleSubmit = async () => {
         try {
+            console.log(totalMoney);
             const result = await orderApi.insertOrder(currentUser._id, totalMoney);
     
             if(result.ok){
