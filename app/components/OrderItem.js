@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import colors from '../config/colors';
 import Text from '../components/Text';
-import numberFormatter from '../utilities/numberFormatter';
 
 export default function CartItem({ 
     name, 
@@ -24,7 +23,7 @@ export default function CartItem({
                 />
                 <View style={styles.infoContainer}>
                     <Text style={[styles.name, customNameStyle]}>{ name }</Text>
-                    <Text customStyle={styles.customPrice}>{numberFormatter(price) + ' ₫' }</Text>
+                    <Text customStyle={styles.customPrice}>{ price }</Text>
                     <View style={styles.counterContainer}>
                         <Text customStyle={styles.counter}>{ cartCounter }</Text>
                     </View>

@@ -7,9 +7,12 @@ const insertOrder = (customerId, totalMoney) => client.post(endpoint, {customerI
 const getLatestOrder = customerId => client.get('/orders/latestOrder/' + customerId);
 
 const getAllOrders = customerId => client.get('orders/getAllOrdersByCustomerId/' + customerId);
+
+const getAllOrderDetails = orderId => client.get('/orderDetails/' + orderId);
  
 export default {
     insertOrder,
     getLatestOrder,
     getAllOrders,
+    getAllOrderDetails,
 }

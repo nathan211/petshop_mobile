@@ -6,6 +6,7 @@ import moment from 'moment';
 import Header from '../components/Header';
 import OrderItem from '../components/OrderItem';
 import orderApi from '../api/order';
+import numberFormatter from '../utilities/numberFormatter';
 
 function OrderManagerScreen({ navigation, currentUser }) {
     const [orders, setOrders] = useState([]);
@@ -37,10 +38,10 @@ function OrderManagerScreen({ navigation, currentUser }) {
                         orders.map(item => (
                             <OrderItem 
                                 name={'Ngày: ' + moment(item.createdDate).format('DD/MM/YYYY')}
-                                price={item.totalMoney}
+                                price={numberFormatter(item.totalMoney + ' ₫')}
                                 cartCounter={'Sản phẩm: ' + 3}
                                 details={true}
-                                onPress={() => navigation.navigate('OrderDetails') }
+                                onPress={() => navigation.navigate('OrderDetails', item) }
                                 customNameStyle={styles.name}
                                 key={item._id}
                             />

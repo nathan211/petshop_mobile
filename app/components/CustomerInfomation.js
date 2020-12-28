@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import colors from '../config/colors';
 import Text from '../components/Text';
 
-function CustomerInfomation({ currentUser }) {
+function CustomerInfomation({ currentUser, renderRightAction }) {
     return (
         <View style={styles.addressContainer}>
             <View style={styles.addressWrapper}>
@@ -15,12 +15,15 @@ function CustomerInfomation({ currentUser }) {
                 </Text>
                 <Text customStyle={styles.address}>{currentUser.address}</Text>
             </View>
-            <TouchableWithoutFeedback 
-                style={styles.deleteContainer}
-                onPress={() => console.log('edit')}
-            >
-                <Text customStyle={styles.delete}>Sửa</Text>
-            </TouchableWithoutFeedback>
+            {
+                renderRightAction ?
+                <TouchableWithoutFeedback 
+                    style={styles.deleteContainer}
+                    onPress={() => console.log('edit')}
+                >
+                    <Text customStyle={styles.delete}>Sửa</Text>
+                </TouchableWithoutFeedback> : null
+            }
         </View>
     )
 }
