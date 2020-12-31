@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 90,
         flexDirection: 'row',
-        borderRadius: 15,
     },
     customPrice: {
         color: colors.red,

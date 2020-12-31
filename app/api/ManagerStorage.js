@@ -19,3 +19,13 @@ export const getUserToken = async () => {
       console.log('Error reading user token => e', e);
     }
 }
+
+export const removeItemValue = async (key) => {
+  try {
+      await AsyncStorage.removeItem(key);
+      return true;
+  }
+  catch(exception) {
+      return false;
+  }
+}

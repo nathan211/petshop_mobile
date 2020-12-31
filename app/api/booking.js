@@ -6,7 +6,10 @@ const insertBooking = (bookedDate, bookedTime, totalMoney) => client.post(endpoi
 
 const findSelectedDate = (selectedDate) => client.post('/bookings/findSelectedDate', { selectedDate });
 
+const getAllBookings = () => client.get(endpoint);
+
 export default {
     insertBooking,
-    findSelectedDate
+    findSelectedDate,
+    getAllBookings,
 }

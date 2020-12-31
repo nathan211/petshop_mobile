@@ -10,8 +10,16 @@ import Setting from '../components/Setting';
 import Text from '../components/Text';
 import ListItem from '../components/ListItem';
 import { signOut } from '../redux/authSlice';
+import { removeItemValue } from '../api/ManagerStorage';
+import AsyncStorageContstants from '../contstants/AsyncStorageContstants';
 
 function SearchScreen({ currentUser, signOut, navigation }) {
+
+    const handleSignOut = () => {
+        removeItemValue(AsyncStorageContstants.AUTH_USER_TOKEN);
+        signOut();
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -64,7 +72,7 @@ function SearchScreen({ currentUser, signOut, navigation }) {
                     title='Đăng xuất' 
                     leftIcon='sign-out' 
                     leftIconColor={colors.brown}
-                    onPress={() => signOut()}
+                    onPress={handleSignOut}
                 />
             </View>
         </View>

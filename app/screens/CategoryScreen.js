@@ -65,7 +65,6 @@ export default function CategoryScreen({ navigation }) {
                     >
                         <Category 
                             icon='star'
-                            customContainerStyle={styles.customContainerStyle}
                             customIconContainer={styles.customIconContainer}
                             customTitleStyle={styles.customTitleStyle}
                             title='Gợi ý cho bạn'
@@ -95,9 +94,9 @@ export default function CategoryScreen({ navigation }) {
                             <Text style={{
                                 width: '100%', 
                                 marginTop: 5, 
-                                marginLeft: 10, 
+                                marginLeft: 15, 
                                 fontSize: 16}}>
-                                    Tất cả danh mục
+                                    Tất cả danh mục:
                             </Text>
                             {
                                 listOfCategories.map(item => (
@@ -139,9 +138,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     customContainerStyle: {
-        borderBottomColor: colors.medium,
-        borderBottomWidth: 0.2,
-        paddingBottom: 5
+        borderTopColor: colors.medium,
+        borderTopWidth: 0.2,
+        paddingTop: 5
     },
     content: {
         flexDirection: 'row',

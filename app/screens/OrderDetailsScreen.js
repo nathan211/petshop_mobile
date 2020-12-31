@@ -10,7 +10,7 @@ import orderApi from '../api/order';
 import numberFormatter from '../utilities/numberFormatter';
 import Text from '../components/Text';
 
-function OrderDetailsScreen({ navigation, currentUser, route }) {
+function OrderDetailsScreen({ navigation, route }) {
     const [orderDetails, setOrderDetails] = useState([]);
     const [totalMoney, setTotalMoney] = useState(0);
     const { _id } = route.params;
@@ -23,7 +23,7 @@ function OrderDetailsScreen({ navigation, currentUser, route }) {
         const result = await orderApi.getAllOrderDetails(_id);
         if(result.ok){
             setTotalMoney(result.data.totalMoney);
-            setOrderDetails(result.data.details);
+            setOrderDetails(result.data.orderDetails);
         }
     }
 
@@ -41,7 +41,7 @@ function OrderDetailsScreen({ navigation, currentUser, route }) {
                             name={item.product.name} 
                             price={numberFormatter(item.product.price) + ' ₫'} 
                             cartCounter={'Số lượng: ' + item.amount}
-                            key={item._id}
+                            key={item.product._id}
                         />
                     ))
                 }
