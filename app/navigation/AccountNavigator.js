@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AccountScreen from '../screens/AccountScreen';
 import BookingManagerScreen from '../screens/BookingManagerScreen';
-import ProfileEdit from '../screens/ProfileEdit';
+import ProfileEditScreen from '../screens/ProfileEditScreen';
 import OrderManagerScreen from  '../screens/OrderManagerScreen';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import BookedDetailsScreen from '../screens/BookedDetailsScreen';
@@ -22,7 +22,7 @@ export default function AccountNavigator() {
             />
             <Stack.Screen 
                 name="ProfileEdit" 
-                component={ProfileEdit} 
+                component={ProfileEditScreen} 
                 options={{
                     headerShown: false, 
                 }}

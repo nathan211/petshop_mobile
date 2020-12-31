@@ -3,12 +3,12 @@ import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, FlatList } from
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import colors from '../config/colors';
-import Category from '../components/Category';
 import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
 import ShoppingCart from '../components/ShoppingCart';
 import productApi from '../api/product';
 import numberFormatter from '../utilities/numberFormatter';
+import Text from '../components/Text';
 
 export default function CategoryScreen({ navigation, route }) {
     const [listOfProducts, setListOfProducts] = useState([]);
@@ -26,6 +26,10 @@ export default function CategoryScreen({ navigation, route }) {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleShowFilterModal = () => {
+        
     }
 
     return (
@@ -46,6 +50,19 @@ export default function CategoryScreen({ navigation, route }) {
                 <ShoppingCart onPress={() => navigation.navigate('ShoppingCart')} />
             </View>
             <ScrollView>
+                <View style={styles.filterContainer}>
+                    <Text customStyle={styles.title}>Tất cả sản phẩm: </Text>
+                    <TouchableWithoutFeedback onPress={handleShowFilterModal}>
+                        <View style={styles.filterWrapper}>
+                            <Text customStyle={styles.filterText}>Bộ lọc</Text>
+                            <Icon 
+                                name='filter'
+                                size={23}
+                                color={colors.brown}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
                 <View  style={styles.cardContainer}>
                 {
                     listOfProducts.map((item) => (
@@ -98,5 +115,21 @@ const styles = StyleSheet.create({
         width: 175,
         height: 250,    
         elevation: 0,
+    },
+    filterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        backgroundColor: colors.white,
+    },
+    filterWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    filterText: {
+        fontWeight: 'bold',
+    },
+    title: {
+        fontWeight: 'bold'
     }
 });

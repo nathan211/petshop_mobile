@@ -28,11 +28,17 @@ const validationSchema = Yup.object().shape({
 export default function ProfileEdit({ navigation }) {
     const [updateFailed, setUpdateFailed] = useState(false);
 
-    const handleSubmit = async ({fullName, address, phoneNumber, email}) => {
+    const handleUpdateUserInformation = async ({fullName, address, phoneNumber, email}) => {
 
-        setUpdateFailed(false);
-        console.log(result.data);
+        
+        //setUpdateFailed(false);
+        //console.log(result.data);
     }
+
+    const handleChangePassword = async () => {
+        
+    } 
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -64,7 +70,7 @@ export default function ProfileEdit({ navigation }) {
                             email: '', 
                         }}
                         validationShema={validationSchema}
-                        onSubmit={handleSubmit}
+                        onSubmit={handleUpdateUserInformation}
                     >
                         <ErrorMessage 
                             visible={updateFailed}
@@ -133,7 +139,7 @@ export default function ProfileEdit({ navigation }) {
                             confirmPassword: ''
                         }}
                         validationShema={validationSchema}
-                        onSubmit={handleSubmit}
+                        onSubmit={handleChangePassword}
                     >
                         <ErrorMessage 
                             visible={updateFailed}
@@ -197,9 +203,7 @@ const styles = StyleSheet.create({
     customInputContainer: {
         borderWidth: 0,
         backgroundColor: colors.lightPink,
-        borderRadius: 0,
-        borderTopStartRadius: 10,
-        borderTopRightRadius: 10
+        borderRadius: 10,
     },
     header: {
         height: 60,
