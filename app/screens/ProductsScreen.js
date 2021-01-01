@@ -45,6 +45,7 @@ export default function CategoryScreen({ navigation, route }) {
     }
 
     const handleChooseFilterItem = (item) => {
+        console.log(item);
         setIsSelected(item.value);
     }
 
@@ -127,7 +128,7 @@ export default function CategoryScreen({ navigation, route }) {
                                         <FilterItem 
                                             label={item.label}
                                             onPress={() => handleChooseFilterItem(item)}
-                                            isSelected={isSelected === item ? true : false}
+                                            isSelected={isSelected === item.value ? true : false}
                                             key={key}
                                         />
                                     ))
