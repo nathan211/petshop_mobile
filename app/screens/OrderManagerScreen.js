@@ -37,13 +37,13 @@ function OrderManagerScreen({ navigation, currentUser }) {
                     {
                         orders.map(item => (
                             <OrderItem 
-                                name={'Ngày: ' + moment(item.createdDate).format('DD/MM/YYYY')}
-                                price={numberFormatter(item.totalMoney + ' ₫')}
-                                cartCounter={'Sản phẩm: ' + 3}
+                                name={'Ngày: ' + moment(item.order.createdDate).format('DD/MM/YYYY')}
+                                price={numberFormatter(item.order.totalMoney + ' ₫')}
+                                cartCounter={'Sản phẩm: ' + item.cartCounter}
                                 details={true}
-                                onPress={() => navigation.navigate('OrderDetails', item) }
+                                onPress={() => navigation.navigate('OrderDetails', item.order) }
                                 customNameStyle={styles.name}
-                                key={item._id}
+                                key={item.order._id}
                             />
                         ))
                     }
