@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Modal } from 'react-native';
+import { 
+    StyleSheet, 
+    View, ScrollView, 
+    TouchableWithoutFeedback,
+    Modal, 
+    TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../components/Button';
@@ -45,17 +50,36 @@ export default function CategoryScreen({ navigation, route }) {
     }
 
     const handleChooseFilterItem = (item) => {
-        console.log(item);
-        setIsSelected(item.value);
+        setIsSelected(item);
+    }
+
+    const handleSubmit = async () => {
+        if(isSelected === null) return;
+
+        if(isSelected.value === 1){
+            const result = await productApi.getSortedProductsLowToHigh();
+            if(result.ok){
+                setListOfProducts(result.data);
+            }
+        } else if(isSelected.value === 2){
+            const result = await productApi.getSortedProductsHighToLow();
+            if(result.ok){
+                console.log(result.data);
+                setListOfProducts(result.data);
+            }
+        }
+        handleCloseModal();
+    }
+
+    const handleUnchosen = () => {
+        setIsSelected(null);
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.iconBackContainer}>
-                    <TouchableWithoutFeedback 
-                        onPress={() => navigation.goBack()}
-                    >
+                    <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
                         <Icon 
                             name='chevron-circle-left'
                             size={40}
@@ -104,6 +128,11 @@ export default function CategoryScreen({ navigation, route }) {
                 Alert.alert("Modal has been closed.");
                 }}
             >
+                <TouchableOpacity 
+                    //style={styles.container} 
+                    activeOpacity={1} 
+                    onPressOut={() => {setModalVisible(!modalVisible)}}
+                >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalHeader}>
                         <TouchableWithoutFeedback onPress={handleCloseModal}>
@@ -118,6 +147,11 @@ export default function CategoryScreen({ navigation, route }) {
                         <View style={styles.modalHeaderTitleContainer}>
                             <Text customStyle={styles.modalHeaderTitle}>Lọc sản phẩm</Text>
                         </View>
+                        <TouchableWithoutFeedback onPress={handleUnchosen}>
+                            <View>
+                                <Text customStyle={{color: colors.white }}>Bỏ chọn</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
                     <View style={styles.modalContent}>
                         <View style={styles.filterByPrice}>
@@ -128,7 +162,7 @@ export default function CategoryScreen({ navigation, route }) {
                                         <FilterItem 
                                             label={item.label}
                                             onPress={() => handleChooseFilterItem(item)}
-                                            isSelected={isSelected === item.value ? true : false}
+                                            isSelected={isSelected === item ? true : false}
                                             key={key}
                                         />
                                     ))
@@ -141,9 +175,11 @@ export default function CategoryScreen({ navigation, route }) {
                             title='Lọc' 
                             color='dark'
                             customTitleStyle={{color: colors.white}}
+                            onPress={handleSubmit}
                         />
                     </View>
                 </View>
+                </TouchableOpacity>
             </Modal>
         </View>
     )
@@ -212,7 +248,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     modalContainer: {
-        width: '70%',
+        width: '80%',
         height: '100%',
         backgroundColor: colors.white,
         alignSelf: 'flex-end',
@@ -229,6 +265,7 @@ const styles = StyleSheet.create({
     },
     modalHeaderTitle: {
         color: colors.white,
+        marginLeft: 35,
     },
     filterTitle: {
         fontWeight: 'bold',

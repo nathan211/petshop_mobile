@@ -55,7 +55,6 @@ function OrderManagerScreen({ navigation, currentUser }) {
 
 const styles = StyleSheet.create({
     container: {
-
     },
     orderContainer: {
         padding: 10,
@@ -72,8 +71,6 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatch = {
-    
-}
+const mapDispatch = {}
 
 export default connect(mapStateToProps, mapDispatch)(OrderManagerScreen)
