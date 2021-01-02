@@ -106,6 +106,7 @@ export default function CategoryScreen({ navigation }) {
                                         customTitleStyle={styles.customTitleCard}
                                         onPress={() => navigation.navigate('Products', item._id)}
                                         key={item._id.toString()}
+                                        imageUrl={item.imageUrl}
                                     /> 
                                 ))
                             }       

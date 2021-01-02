@@ -114,6 +114,7 @@ export default function CategoryScreen({ navigation, route }) {
                             onPress={() => navigation.navigate('ProductDetails', item)}
                             customContainerStyle={styles.customCardContainer}
                             customTitleStyle={styles.customCardTitle}
+                            imageUrl={item.imageUrl}
                             key={item._id}
                         />
                     ))
@@ -129,7 +130,6 @@ export default function CategoryScreen({ navigation, route }) {
                 }}
             >
                 <TouchableOpacity 
-                    //style={styles.container} 
                     activeOpacity={1} 
                     onPressOut={() => {setModalVisible(!modalVisible)}}
                 >
@@ -208,11 +208,6 @@ const styles = StyleSheet.create({
     customSearchBarStyle: {
         flex: 1,
     },
-    customContainerCard: {
-        width: 90,
-        height: 100,
-        elevation: 0,
-    },
     customCardTitle: {
         fontSize: 16
     },
@@ -223,6 +218,7 @@ const styles = StyleSheet.create({
         width: 175,
         height: 250,    
         elevation: 0,
+        marginVertical: 5,
     },
     filterContainer: {
         flexDirection: 'row',

@@ -5,7 +5,6 @@ import colors from '../config/colors'
 import Text from './Text'
 
 export default function Card({ 
-        image,
         title, 
         subTitle, 
         customContainerStyle,
@@ -15,7 +14,7 @@ export default function Card({
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, customContainerStyle]}>
-                    <Image style={styles.image} source={require('../assets/images/product.jpg')} />
+                    <Image style={styles.image} source={{ uri: 'http://192.168.1.41:5000' + imageUrl }} />
                     <View style={styles.titleContainer}>
                         <Text numberOfLines={2} customStyle={[styles.title, customTitleStyle]}>{title}</Text>
                         <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>

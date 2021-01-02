@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation }) {
                                     title={item.name} 
                                     subTitle={numberFormatter(item.price) + ' ₫'} 
                                     onPress={() => navigation.navigate('ProductDetails', item)}
-                                    //imageUrl={item.imageUrl}
+                                    imageUrl={item.imageUrl}
                                 />
                             );
                         }}
