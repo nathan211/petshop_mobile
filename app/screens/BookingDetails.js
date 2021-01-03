@@ -10,31 +10,36 @@ import Text from '../components/Text';
 import DatetimePickerItem from '../components/DatetimePickerItem';
 import TimeItem from '../components/TimeItem';
 import bookingApi from '../api/booking';
+import numberFormatter from '../utilities/numberFormatter';
 
-export default function BookingDetails({ navigation }) {
+export default function BookingDetails({ navigation, route }) {
+    const { _id, price } = route.params;
     const bookingTime = [
         8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
     ];
     const [time, setTime] = useState([]);
-    const [isSelected, setIsSelected] = useState(0);
+    const [isSelected, setIsSelected] = useState(null);
     const [selectedDate, setSelectedDate] = useState(moment(new Date()).format('DD/MM/YYYY'));
     const [selectedTime, setSelectedTime] = useState();
     const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
     const [totalMoney, setTotalMoney] = useState(123456);
 
     useEffect(() => {
+        setTotalMoney(price);
         renderSelectedDate(moment(new Date()).format('DD/MM/YYYY').toString());
     }, [])
 
     const handleSubmit = async () => {
         try {
-            const result = await bookingApi.insertBooking(selectedDate, selectedTime, totalMoney);
+            if(isSelected === null) return;
+
+            const result = await bookingApi.insertBooking(selectedDate, selectedTime, _id, totalMoney);
             if(result.ok){
                 createAlert();
                 renderSelectedDate(moment(new Date()).format('DD/MM/YYYY').toString());
             } 
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
         
     }
@@ -145,7 +150,7 @@ export default function BookingDetails({ navigation }) {
                         ))
                     }
                 </View>
-                <Text customStyle={styles.totalMoney}>Tổng tiền: {totalMoney}</Text>
+                <Text customStyle={styles.totalMoney}>Tổng tiền: {numberFormatter(totalMoney) + ' ₫'}</Text>
                 <Button 
                     title='Xong' 
                     color='brown' 

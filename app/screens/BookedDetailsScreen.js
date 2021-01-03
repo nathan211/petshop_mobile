@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, ScrollView } from 'react-native';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
 import Header from '../components/Header';
 import Text from '../components/Text';
+import comboApi from '../api/combo';
+import numberFormatter from '../utilities/numberFormatter';
 
-export default function BookedDetailsScreen({ navigation }) {
+export default function BookedDetailsScreen({ navigation, route }) {
+    const { comboId, bookedDate, bookedTime } = route.params;
+    const [combo, setCombo] = useState({});
+    
+    useEffect(() => {
+        getComboDetails();
+    }, []);
 
     const handleSubmit = () => {
-
+        
     }
+
+    const getComboDetails = async () => {
+        try {
+            const result = await comboApi.getComboDetails(comboId);
+
+            if(result.ok){
+                setCombo(result.data);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    } 
 
     return (
         <View style={styles.container}>
@@ -24,17 +44,17 @@ export default function BookedDetailsScreen({ navigation }) {
                         <View style={styles.booking}>
                             <Image 
                                 style={styles.image} 
-                                source={require('../assets/images/grooming1.jpg')} 
+                                source={{ uri: 'http://192.168.1.41:5000' + combo.imageUrl }} 
                             />
                             <View style={styles.titleContainer}>
-                                <Text style={styles.name}>Combo trọn gói tắm & tạo kiểu</Text>
-                                <Text style={styles.price}>234567</Text>
+                                <Text style={styles.name}>{ combo.name }</Text>
+                                <Text style={styles.price}>{numberFormatter(combo.price ? combo.price : 0) + ' ₫'}</Text>
                             </View>
                         </View>
                         <Text style={styles.title}>Lịch hẹn:</Text>
                         <View style={styles.bookingDateContainer}>
-                            <Text>Ngày: 12/12/2020</Text>
-                            <Text>Giờ: 9:00</Text>
+                            <Text>{'Ngày: ' + bookedDate}</Text>
+                            <Text>{'Giờ: ' + bookedTime + ':00'}</Text>
                         </View>
                     </View>
                 </View>

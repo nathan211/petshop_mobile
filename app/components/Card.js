@@ -9,13 +9,14 @@ export default function Card({
         subTitle, 
         customContainerStyle,
         customTitleStyle,
+        customTitleContainerStyle,
         onPress,
         imageUrl }) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, customContainerStyle]}>
                     <Image style={styles.image} source={{ uri: 'http://192.168.1.41:5000' + imageUrl }} />
-                    <View style={styles.titleContainer}>
+                    <View style={[styles.titleContainer, customTitleContainerStyle]}>
                         <Text numberOfLines={2} customStyle={[styles.title, customTitleStyle]}>{title}</Text>
                         <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>
                     </View>

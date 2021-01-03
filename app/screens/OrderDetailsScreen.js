@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import Button from '../components/Button';
 import colors from '../config/colors';
 import Header from '../components/Header';
 import OrderItem from '../components/OrderItem';
@@ -17,7 +18,11 @@ function OrderDetailsScreen({ navigation, route }) {
 
     useEffect(() => {
         getOrderDetails();
-    }, [])
+    }, []);
+
+    const handleSubmit = () => {
+
+    }
 
     const getOrderDetails = async () => {
         const result = await orderApi.getAllOrderDetails(_id);
@@ -28,7 +33,7 @@ function OrderDetailsScreen({ navigation, route }) {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
              <Header 
                 title='Chi tiết đơn hàng' 
                 onPress={() => navigation.goBack()}
@@ -49,11 +54,26 @@ function OrderDetailsScreen({ navigation, route }) {
                     <Text customStyle={styles.totalMoney}>{ 'Tổng tiền: ' + numberFormatter(totalMoney) + ' ₫'}</Text>
                 </View>
             </ScrollView>
+            <Button 
+                title='Hủy' 
+                color='brown'
+                customTitleStyle={styles.customButtonTitle}
+                customContainerStyle={styles.customButtonContainer}
+                onPress={handleSubmit}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    customButtonTitle: {
+        color: colors.white
+    },
+    customButtonContainer: {
+    },
     totalMoney: {
         fontSize: 20,
         color: colors.red,
@@ -64,7 +84,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         padding: 10,
         marginTop: 5,
-    }
+    },
 })
 
 const mapStateToProps = state => {

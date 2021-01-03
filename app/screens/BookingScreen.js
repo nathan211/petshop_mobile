@@ -1,12 +1,35 @@
-import React from 'react';
-import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 
+import Card from '../components/Card';
 import colors from '../config/colors';
 import Chatting from '../components/Chatting';
 import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
+import comboApi from '../api/combo';
+import numberFormatter from '../utilities/numberFormatter';
+
 
 export default function BookingScreen({ navigation }) {
+    const [combos , setCombos] = useState([]);
+
+    useEffect(() => {
+        getCombos();
+    }, []);
+
+    const getCombos = async () => {
+        try {
+            const result = await comboApi.getCombos();
+
+            if(result.ok){
+                setCombos(result.data);
+                console.log(result.data);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -17,17 +40,21 @@ export default function BookingScreen({ navigation }) {
                 </View>
             </View>
             <TouchableWithoutFeedback onPress={() => navigation.navigate('BookingDetails')}>
-                <View  style={styles.bookingContainer}>
-                    <View style={styles.booking}>
-                        <Image 
-                            style={styles.image} 
-                            source={require('../assets/images/grooming1.jpg')} 
-                        />
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.name}>Combo trọn gói tắm & tạo kiểu</Text>
-                            <Text style={styles.price}>234567</Text>
-                        </View>
-                    </View>
+                <View style={styles.bookingContainer}>
+                    {
+                        combos.map(item => (
+                            <Card 
+                                title={item.name}
+                                subTitle={numberFormatter(item.price) + ' ₫'}
+                                imageUrl={item.imageUrl}
+                                customContainerStyle={styles.booking}
+                                customTitleStyle={styles.customTitle}
+                                customTitleContainerStyle={styles.customTitleContainer}
+                                key={item._id}
+                                onPress={() => navigation.navigate('BookingDetails', item)}
+                            />
+                        ))
+                    }
                 </View>
             </TouchableWithoutFeedback>
         </View>
@@ -40,12 +67,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
     },
     booking: {
-        backgroundColor: colors.white,
         width: '100%',
         height: 250,
         borderRadius: 10,
         overflow: 'hidden',
+        elevation: 0,
+        marginHorizontal: 0,
+        marginVertical: 0,
     },
+    customTitle: {
+        fontSize: 20,
+    },
+    customTitleContainer: {
+        padding: 10,
+    },  
     header: {
         height: 60,
         flexDirection: 'row',
@@ -64,21 +99,5 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 10,
         fontWeight: 'bold'
-    },
-    image: {
-        width: '100%',
-        height: 190
-    },
-    name: {
-        fontSize: 20
-    },
-    price: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.red
-    },
-    titleContainer: {
-        paddingVertical: 5,
-        paddingHorizontal: 10
     },
 })

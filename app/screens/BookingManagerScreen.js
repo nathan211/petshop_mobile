@@ -23,7 +23,6 @@ export default function BookingManagerScreen({ navigation }) {
         }
     }
 
-
     return (
         <View>
             <Header 
@@ -38,7 +37,7 @@ export default function BookingManagerScreen({ navigation }) {
                                 dayBooking={item.bookedDate}
                                 timeBooking={item.bookedTime + ':00'} 
                                 price={item.totalMoney}
-                                onPress={() => navigation.navigate('BookedDetails')}
+                                onPress={() => navigation.navigate('BookedDetails', item)}
                                 key={item._id}
                             />
                         ))

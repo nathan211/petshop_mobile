@@ -2,7 +2,7 @@ import client from './client';
 
 const endpoint = '/bookings'
 
-const insertBooking = (bookedDate, bookedTime, totalMoney) => client.post(endpoint, {bookedDate, bookedTime, totalMoney});
+const insertBooking = (bookedDate, bookedTime, comboId, totalMoney) => client.post(endpoint, {bookedDate, bookedTime, comboId, totalMoney});
 
 const findSelectedDate = (selectedDate) => client.post('/bookings/findSelectedDate', { selectedDate });
 

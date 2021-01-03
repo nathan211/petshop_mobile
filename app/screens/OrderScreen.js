@@ -11,8 +11,8 @@ import OrderItem from '../components/OrderItem';
 import orderApi from '../api/order';
 import orderDetailsApi from '../api/orderDetails';
 import Text from '../components/Text';
-import numberFormatter from '../utilities/numberFormatter';
 import CustomerInfomation from '../components/CustomerInfomation';
+import numberFormatter from '../utilities/numberFormatter';
 
 function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
 
@@ -70,8 +70,8 @@ function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
                             <OrderItem 
                                 key={item._id.toString()}
                                 name={item.name} 
-                                price={item.price} 
-                                cartCounter={item.cartCounter}
+                                price={numberFormatter(item.price)+ ' ₫'} 
+                                cartCounter={'x' + item.cartCounter}
                             />
                         );
                     }) 
