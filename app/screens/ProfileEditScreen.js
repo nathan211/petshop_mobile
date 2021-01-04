@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, TouchableWithoutFeedback, Alert } from 'react-native';
 import * as Yup from 'yup';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 import { 
     Form, 
@@ -10,13 +11,18 @@ import {
     ErrorMessage, 
 } from '../components/forms';
 import colors from '../config/colors';
-import Text from '../components/Text';    
+import Text from '../components/Text';   
+import customerApi from '../api/customer'; 
+import TextInput from '../components/TextInput';
 
-const validationSchema = Yup.object().shape({
+const validationSchemaUpdateInfomation = Yup.object().shape({
     fullName: Yup.string().required('Bạn chưa nhập họ và tên'),
     address: Yup.string().required('Bạn chưa nhập địa chỉ'),
     phoneNumber: Yup.string().required('Bạn chưa nhập số điện thoại'),
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
+});
+
+const validationSchemaChangePassword = Yup.object().shape({
     password: Yup.string().required('Bạn chưa nhập mật khẩu').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
     confirmPassword: Yup.string().required('Bạn chưa nhập lại mật khẩu')
         .min(6, 'Mật khẩu phải lớn hơn 6 ký tự')
@@ -25,19 +31,42 @@ const validationSchema = Yup.object().shape({
     }),
 });
 
-export default function ProfileEdit({ navigation }) {
+function ProfileEditScreen({ navigation, currentUser }) {
     const [updateFailed, setUpdateFailed] = useState(false);
-
-    const handleUpdateUserInformation = async ({fullName, address, phoneNumber, email}) => {
-
-        
-        //setUpdateFailed(false);
-        //console.log(result.data);
+    console.log(currentUser);
+    const handleSubmit = async ({fullName, address, phoneNumber, email}) => {
+        try {
+            console.log('pressed');
+            console.log(currentUser._id);
+            const result = await customerApi.updateUserInformation(currentUser._id, fullName, address, phoneNumber, email);
+            if(result.ok){
+                createAlert();
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+        // setUpdateFailed(false);
+        // console.log(result.data);
     }
 
     const handleChangePassword = async () => {
-        
+        console.log('pressed');
     } 
+
+    const createAlert = () =>
+    Alert.alert(
+      "Thông báo!",
+      "Cập nhật thông tin thành công.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: console.log("OK Pressed")}
+      ],
+      { cancelable: false }
+    );
 
     return (
         <View style={styles.container}>
@@ -64,13 +93,13 @@ export default function ProfileEdit({ navigation }) {
                 <View style={styles.inputContainer}>
                     <Form
                         initialValues={{
-                            fullName: '',
-                            address: '',
-                            phoneNumber: '',
-                            email: '', 
+                            fullName: currentUser.fullName,
+                            address: currentUser.address,
+                            phoneNumber: currentUser.phoneNumber,
+                            email: currentUser.email, 
                         }}
-                        validationShema={validationSchema}
-                        onSubmit={handleUpdateUserInformation}
+                        validationShema={validationSchemaUpdateInfomation}
+                        onSubmit={handleSubmit}
                     >
                         <ErrorMessage 
                             visible={updateFailed}
@@ -88,6 +117,7 @@ export default function ProfileEdit({ navigation }) {
                             placeholderTextColor={colors.medium} 
                             iconColor={colors.medium}
                         />
+                        
                         <FormField 
                             autoCorrect={false}
                             autoCapitalize='none'
@@ -138,7 +168,7 @@ export default function ProfileEdit({ navigation }) {
                             password: '',
                             confirmPassword: ''
                         }}
-                        validationShema={validationSchema}
+                        validationShema={validationSchemaChangePassword}
                         onSubmit={handleChangePassword}
                     >
                         <ErrorMessage 
@@ -222,3 +252,14 @@ const styles = StyleSheet.create({
         marginBottom: 10
     }
 })
+
+const mapStateToProps = state => {
+    return {
+        currentUser: state.auth.currentUser,
+    }
+}
+
+const mapDispatch = {
+}
+
+export default connect(mapStateToProps, mapDispatch)(ProfileEditScreen)
