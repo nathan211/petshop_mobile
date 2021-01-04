@@ -8,6 +8,7 @@ import colors from '../config/colors';
 import CartItem from '../components/CartItem';
 import Text from '../components/Text';
 import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
+import numberFormatter from '../utilities/numberFormatter';
 
 function ShoppingCartScreen({ 
     navigation, 
@@ -69,7 +70,7 @@ function ShoppingCartScreen({
             <View style={styles.orderContainer}>
                 <View style={styles.totalContainer}>
                     <Text customStyle={styles.totalTitle}>Tổng tiền</Text>
-                    <Text customStyle={styles.total}>{ totalMoney }</Text>
+                    <Text customStyle={styles.total}>{ numberFormatter(totalMoney) + ' ₫' }</Text>
                 </View>
                 <Button 
                     title='tiến hành đặt hàng' 

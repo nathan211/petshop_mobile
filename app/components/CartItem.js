@@ -4,6 +4,7 @@ import { StyleSheet, View, TouchableWithoutFeedback, Image } from 'react-native'
 import Button from '../components/Button';
 import colors from '../config/colors';
 import Text from '../components/Text';
+import numberFormatter from '../utilities/numberFormatter';
 
 export default function CartItem({ 
     name, 
@@ -21,7 +22,7 @@ export default function CartItem({
                 />
                 <View style={styles.nameContainer}>
                     <Text>{ name }</Text>
-                    <Text>{ price }</Text>
+                    <Text customStyle={styles.price}>{ numberFormatter(price) + ' ₫' }</Text>
                     <View style={styles.counterContainer}>
                         <Button 
                             title='-'
@@ -79,5 +80,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         paddingVertical: 10
+    },
+    price: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: colors.red,
     }
 })

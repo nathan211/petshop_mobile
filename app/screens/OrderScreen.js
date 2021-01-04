@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Button from '../components/Button';
 import colors from '../config/colors';
 import Header from '../components/Header';
-import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
+import { decreaseHandler, increaseHandler, clearCart } from '../redux/shoppingCartSlice';
 import OrderItem from '../components/OrderItem';
 import orderApi from '../api/order';
 import orderDetailsApi from '../api/orderDetails';
@@ -14,7 +14,12 @@ import Text from '../components/Text';
 import CustomerInfomation from '../components/CustomerInfomation';
 import numberFormatter from '../utilities/numberFormatter';
 
-function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
+function OrderScreen({ 
+    navigation, 
+    cartItems, 
+    currentUser, 
+    totalMoney,
+    clearCart, }) {
 
     const handleSubmit = async () => {
         try {
@@ -31,6 +36,7 @@ function OrderScreen({ navigation, cartItems, currentUser, totalMoney }) {
                     createAlert();
                 }
             }
+            clearCart();
         } catch (error) {
             console.log(error);
         }
@@ -158,6 +164,7 @@ const mapStateToProps = state => {
 const mapDispatch = {
     decreaseHandler,
     increaseHandler,
+    clearCart,
 }
 
 export default connect(mapStateToProps, mapDispatch)(OrderScreen)

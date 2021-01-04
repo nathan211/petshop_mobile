@@ -74,6 +74,14 @@ const shoppingCartSlice = createSlice({
         deleteHandler: {
             reducer(state, action){
                 
+            },
+            prepare(id){
+                return { payload: { id } }
+            }
+        },
+        clearCart: {
+            reducer(state){
+                state.cartItems = [];
             }
         }
     }
@@ -82,5 +90,7 @@ const shoppingCartSlice = createSlice({
 export const { 
     addToCart, 
     decreaseHandler, 
-    increaseHandler, } = shoppingCartSlice.actions;
+    increaseHandler,
+    clearCart,
+} = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;
