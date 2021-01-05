@@ -14,6 +14,7 @@ import colors from '../config/colors';
 import Text from '../components/Text';   
 import customerApi from '../api/customer'; 
 import TextInput from '../components/TextInput';
+import TabItem from '../components/lists/TabItem';
 
 const validationSchemaUpdateInfomation = Yup.object().shape({
     fullName: Yup.string().required('Bạn chưa nhập họ và tên'),
@@ -32,12 +33,17 @@ const validationSchemaChangePassword = Yup.object().shape({
 });
 
 function ProfileEditScreen({ navigation, currentUser }) {
+    const [tabItems, setTabItems] = useState([
+        'Cá nhân', 'Đỗi mật khẩu'
+    ]);
+
+    const [isActive, setIsActive] = useState('Cá nhân');
+
     const [updateFailed, setUpdateFailed] = useState(false);
     console.log(currentUser);
+
     const handleSubmit = async ({fullName, address, phoneNumber, email}) => {
         try {
-            console.log('pressed');
-            console.log(currentUser._id);
             const result = await customerApi.updateUserInformation(currentUser._id, fullName, address, phoneNumber, email);
             if(result.ok){
                 createAlert();
@@ -45,8 +51,6 @@ function ProfileEditScreen({ navigation, currentUser }) {
         } catch (error) {
             console.log(error.message);
         }
-        // setUpdateFailed(false);
-        // console.log(result.data);
     }
 
     const handleChangePassword = async () => {
@@ -68,6 +72,10 @@ function ProfileEditScreen({ navigation, currentUser }) {
       { cancelable: false }
     );
 
+    const handleChangeTab = (item) => {
+        setIsActive(item);
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -88,6 +96,18 @@ function ProfileEditScreen({ navigation, currentUser }) {
                    paddingRight: 80,
                    color: colors.white,
                 }}>Cập nhật thông tin</Text>
+            </View>
+            <View style={styles.tabContainer}>
+                {
+                    tabItems.map((item, key) => (
+                        <TabItem 
+                            title={item}
+                            isActive={isActive === item ? true : false}
+                            onPress={() => handleChangeTab(item)}
+                            key={key}
+                        />
+                    ))
+                }
             </View>
             <View style={styles.content}>
                 <View style={styles.inputContainer}>
@@ -250,6 +270,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: colors.white,
         marginBottom: 10
+    },
+    tabContainer: {
+        flexDirection: 'row',
+        backgroundColor: colors.white,
     }
 })
 
