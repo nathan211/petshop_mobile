@@ -10,6 +10,7 @@ import {
     SubmitButton,
     ErrorMessage, 
 } from '../components/forms';
+import Button from '../components/Button';
 import colors from '../config/colors';
 import Text from '../components/Text';   
 import customerApi from '../api/customer'; 
@@ -26,16 +27,6 @@ const validationSchemaUpdateInfomation = Yup.object().shape({
     email: Yup.string().required('Bạn chưa nhập email').email('Sai định dạng email'),
 });
 
-const validationSchemaChangePassword = Yup.object().shape({
-    oldPassword: Yup.string().required('Bạn chưa nhập mật khẩu cũ').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
-    newPassword: Yup.string().required('Bạn chưa nhập mật khẩu mới').min(6, 'Mật khẩu phải lớn hơn 6 ký tự'),
-    confirmPassword: Yup.string().required('Bạn chưa nhập lại mật khẩu')
-        .min(6, 'Mật khẩu phải lớn hơn 6 ký tự')
-        .test('confirmPassword','Mật khẩu xác nhận không chính xác!', function(value) {
-        return this.parent.newPassword === value;
-    }),
-});
-
 function ProfileEditScreen({ navigation, currentUser, signOut }) {
     const [tabItems, setTabItems] = useState([
         1, 2
@@ -43,6 +34,11 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
     const [isActive, setIsActive] = useState(1);
     const [updatePasswordFailed, setUpdatePasswordFailed] = useState(false);
     const [updateInformationFailed, setUpdateInformationFailed] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isConfirmPasswordWrong, setIsConfirmPasswordWrong] = useState(false);
+    const [isNewPasswordWrong, setIsNewPasswordWrong] = useState(false);
 
     const handleSubmit = async ({fullName, address, phoneNumber, email}) => {
         try {
@@ -57,8 +53,19 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
         }
     }
 
-    const handleChangePassword = async ({ oldPassword, newPassword }) => {
+    const handleChangePassword = async () => {
         try {
+            console.log(currentUser._id, oldPassword, newPassword);
+            if(confirmPassword !== newPassword){
+                return setIsConfirmPasswordWrong(true);
+            }
+
+            if (!regexPassword(newPassword)) {
+                return setIsNewPasswordWrong(true);
+            }
+          
+            clearError();
+
             const result = await customerApi.changePassword(currentUser._id, oldPassword, newPassword);
 
             if(result.ok){
@@ -106,6 +113,28 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
     const handleChangeTab = (item) => {
         setIsActive(item);
     }
+
+    const regexPassword = password => {
+        var strongRegex = new RegExp('^(?=.{6,})');
+        return strongRegex.test(password);
+    };
+
+    const checkError = (state, text) => {
+        if (state) {
+          return (
+            <Text customStyle={styles.error}>
+              {text}
+            </Text>
+        );
+        } else {
+          return <View />;
+        }
+    };
+
+    const clearError = () => {
+        setIsNewPasswordWrong(false);
+        setIsConfirmPasswordWrong(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -220,24 +249,15 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
                             </Form>
                         </View> :
                         <View style={styles.inputContainer}>
-                            <Form
-                                initialValues={{
-                                    oldPassword: '',
-                                    newPassword: '',
-                                    confirmPassword: ''
-                                }}
-                                validationShema={validationSchemaChangePassword}
-                                onSubmit={handleChangePassword}
-                            >
+                           
                                 <ErrorMessage 
                                     visible={updatePasswordFailed}
                                     error="Đỗi mật khẩu không thành công!"
                                 />
-                                <FormField 
+                                <TextInput 
                                     autoCorrect={false}
                                     autoCapitalize='none'
                                     icon='lock'
-                                    name='oldPassword'
                                     placeholder='Mật khẩu cũ'
                                     textContentType='password'
                                     secureTextEntry
@@ -246,13 +266,13 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
                                     customInputStyle={styles.customInput}
                                     placeholderTextColor={colors.medium} 
                                     iconColor={colors.medium}
+                                    onChangeText={text => setOldPassword(text)}
                                 />
-                                <FormField 
+                               <TextInput 
                                     autoCorrect={false}
                                     autoCapitalize='none'
                                     icon='lock'
-                                    name='newPassword'
-                                    placeholder='Mật khẩu mới'
+                                    placeholder='Mật khẩu cũ'
                                     textContentType='password'
                                     secureTextEntry
                                     customContainerStyle={styles.customInputContainer}
@@ -260,12 +280,13 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
                                     customInputStyle={styles.customInput}
                                     placeholderTextColor={colors.medium} 
                                     iconColor={colors.medium}
+                                    onChangeText={text => setNewPassword(text)}
                                 />
-                                <FormField 
+                                {checkError(isNewPasswordWrong, "Mật khẩu phải có ít nhất 6 ký tự.")}
+                                <TextInput 
                                     autoCorrect={false}
                                     autoCapitalize='none'
                                     icon='lock'
-                                    name='confirmPassword'
                                     placeholder='Nhập lại mật khẩu'
                                     textContentType='password'
                                     secureTextEntry
@@ -274,14 +295,16 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
                                     customInputStyle={styles.customInput}
                                     placeholderTextColor={colors.medium} 
                                     iconColor={colors.medium}
+                                    onChangeText={text => setConfirmPassword(text)}
                                 />
-                                <SubmitButton 
+                                {checkError(isConfirmPasswordWrong, "Mật khẩu không trùng khớp.")}
+                                <Button 
                                     title='Đỗi mật khẩu' 
                                     customTitleStyle={styles.customTitleButton}
                                     color='brown'
                                     customTitleStyle={styles.customTitleButton}
+                                    onPress={handleChangePassword}
                                 />
-                            </Form>
                         </View>
                     }
                 </View>
@@ -327,6 +350,9 @@ const styles = StyleSheet.create({
     tabContainer: {
         flexDirection: 'row',
         backgroundColor: colors.white,
+    },
+    error: {
+        color: colors.red,
     }
 })
 
