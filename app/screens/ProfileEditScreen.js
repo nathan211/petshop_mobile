@@ -272,7 +272,7 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
                                     autoCorrect={false}
                                     autoCapitalize='none'
                                     icon='lock'
-                                    placeholder='Mật khẩu cũ'
+                                    placeholder='Mật khẩu mới'
                                     textContentType='password'
                                     secureTextEntry
                                     customContainerStyle={styles.customInputContainer}

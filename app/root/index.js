@@ -22,6 +22,11 @@ function Root({ currentUser, signIn }) {
         try {
             const token = await getUserToken();
             const user = await jwtDecode(token);
+
+            if(user === null){
+                return setIsLoading(false);
+            }
+
             signIn(token, user.info);
             setIsLoading(false);
         } catch (error) {

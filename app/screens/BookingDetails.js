@@ -36,7 +36,7 @@ export default function BookingDetails({ navigation, route }) {
             const result = await bookingApi.insertBooking(selectedDate, selectedTime, _id, totalMoney);
             if(result.ok){
                 createAlert();
-                renderSelectedDate(moment(new Date()).format('DD/MM/YYYY').toString());
+                renderSelectedDate(selectedDate);
             } 
         } catch (error) {
             console.log(error.message);
