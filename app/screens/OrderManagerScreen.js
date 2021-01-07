@@ -65,7 +65,7 @@ function OrderManagerScreen({ navigation, currentUser }) {
             text = 'Đang giao';
         } else if(status === 4){
             text = 'Đã giao';
-        } else  if(status === 5){
+        } else if(status === 5){
             text = 'Đã hủy';
         }
 

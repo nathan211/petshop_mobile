@@ -44,7 +44,7 @@ export default function BookedDetailsScreen({ navigation, route }) {
                         <View style={styles.booking}>
                             <Image 
                                 style={styles.image} 
-                                source={{ uri: 'http://192.168.1.46:5000' + combo.imageUrl }} 
+                                source={{ uri: 'http://192.168.1.41:5000' + combo.imageUrl }} 
                             />
                             <View style={styles.titleContainer}>
                                 <Text style={styles.name}>{ combo.name }</Text>

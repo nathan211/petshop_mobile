@@ -4,7 +4,8 @@ import {
     View, ScrollView, 
     TouchableWithoutFeedback,
     Modal, 
-    TouchableOpacity } from 'react-native';
+    TouchableOpacity,
+    FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../components/Button';
@@ -104,7 +105,7 @@ export default function CategoryScreen({ navigation, route }) {
                     </View>
                 </TouchableWithoutFeedback>
             </View>
-            <ScrollView>
+            {/* <ScrollView>
                 <View  style={styles.cardContainer}>
                 {
                     listOfProducts.map((item) => (
@@ -119,8 +120,29 @@ export default function CategoryScreen({ navigation, route }) {
                         />
                     ))
                 }
+                   
                 </View>
-            </ScrollView>
+            </ScrollView> */}
+            <FlatList 
+                style={styles.cardContainer}
+                data={listOfProducts}
+                keyExtractor={item => item._id.toString()}
+                renderItem={({item}) => {
+                    return (
+                        <Card 
+                            title={item.name}
+                            subTitle={numberFormatter(item.price) + ' ₫'} 
+                            onPress={() => navigation.navigate('ProductDetails', item)}
+                            customContainerStyle={styles.customCardContainer}
+                            customTitleStyle={styles.customCardTitle}
+                            imageUrl={item.imageUrl}
+                            key={item._id}
+                        />
+                    );
+                }}
+                numColumns={2}
+            />
+                
             <Modal
                 animationType="fade"
                 transparent={true}
