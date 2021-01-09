@@ -1,7 +1,8 @@
-import { create } from "apisauce";
+import { create } from 'apisauce';
+import UrlContstants from '../contstants/UrlContstant';
 
 const apiClient = create({
-  baseURL: "http://192.168.1.41:5000/api"
+  baseURL: UrlContstants.HOSTING + '/api',
 });
 
 export default apiClient;

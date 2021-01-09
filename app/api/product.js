@@ -2,9 +2,9 @@ import client from './client';
 
 const endpoint = "/products"
 
-const getListOfProducts = () => client.get(endpoint);
+const getListOfProducts = (currentPage) => client.post(endpoint, { currentPage });
 
-const getFilteredProductsByCategory = (categoryId) => client.get('/products/filterByCategory/' + categoryId);
+const getFilteredProductsByCategory = (currentPage, categoryId) => client.post('/products/filterByCategory', { currentPage, categoryId});
 
 const getSortedProductsLowToHigh = () => client.get('/products/lowToHigh');
 

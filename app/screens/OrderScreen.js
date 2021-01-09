@@ -23,7 +23,8 @@ function OrderScreen({
 
     const handleSubmit = async () => {
         try {
-            console.log(totalMoney);
+            if(cartItems.length === 0) return;
+
             const result = await orderApi.insertOrder(currentUser._id, totalMoney);
     
             if(result.ok){
@@ -34,11 +35,11 @@ function OrderScreen({
                         insertOrderDetails(order._id, item._id, item.cartCounter);
                     });
                     createAlert();
+                    clearCart();
                 }
             }
-            clearCart();
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }
 

@@ -15,10 +15,16 @@ import numberFormatter from '../utilities/numberFormatter'
 export default function HomeScreen({ navigation }) {
     const [listOfProducts, setListOfProducts] = useState([]);
     const [listOfCategories, setListOfCategories] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    
+    useEffect(() => {
+        getListOfProducts(currentPage);
+        getListOfCategories();
+    }, []);
 
-    const getListOfProducts = async () => {
+    const getListOfProducts = async (currentPage) => {
         try {
-            const result = await productApi.getListOfProducts();
+            const result = await productApi.getListOfProducts(currentPage);
             setListOfProducts(result.data);
         } catch (error) {
             console.log(error);
@@ -34,10 +40,15 @@ export default function HomeScreen({ navigation }) {
         }
     }
 
-    useEffect(() => {
-        getListOfProducts();
-        getListOfCategories();
-    }, []);
+    const handleLoadMore = async () => {
+        try {
+            const result = await productApi.getListOfProducts(currentPage + 1);
+            setListOfProducts([...listOfProducts, ...result.data]);
+            setCurrentPage(currentPage + 1);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -48,10 +59,10 @@ export default function HomeScreen({ navigation }) {
             </View>
             <View style={styles.content}>
                 <CumulativePoints />
+                <Text style={styles.title}>Danh mục</Text>
                 <View style={styles.categoryContainer}>
-                    <Text style={styles.title}>Danh mục</Text>
                     <FlatList 
-                        style={styles.iconContainer}
+                        contentContainerStyle={styles.iconContainer}
                         horizontal
                         data={listOfCategories}
                         keyExtractor={item => item._id.toString()}
@@ -67,10 +78,10 @@ export default function HomeScreen({ navigation }) {
                         showsHorizontalScrollIndicator={false} 
                     />
                 </View>
-                <View style={styles.featureProductContainer}>
+                <View style={styles.featureProductContainer}> 
                     <Text style={styles.title}>Sản phẩm nỗi bật</Text> 
                     <FlatList 
-                        style={styles.cardContainer}
+                        contentContainerStyle={styles.cardContainer} 
                         horizontal
                         data={listOfProducts}
                         keyExtractor={item => item._id.toString()}
@@ -85,6 +96,8 @@ export default function HomeScreen({ navigation }) {
                             );
                         }}
                         showsHorizontalScrollIndicator={false}
+                        onEndReached={handleLoadMore}
+                        onEndReachedThreshold={0.5}
                     />
                 </View>
             </View>
@@ -109,18 +122,19 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     categoryContainer: {
-        marginTop: 15,
+        marginTop: 5,
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         color: colors.dark,
+        marginTop: 10
     },
     iconContainer: {
-        paddingVertical: 5,
+        
     },
     cardContainer: {
-        paddingVertical: 5,
+        //backgroundColor: colors.red
     },
     customTitleCategory: {
       

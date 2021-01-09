@@ -49,6 +49,7 @@ function OrderManagerScreen({ navigation, currentUser }) {
 
     const handleChangeTab = (item) => {
         if(item.value === 1){
+            setIsActive(item);
             return getAllOrders();
         }
 
@@ -75,7 +76,7 @@ function OrderManagerScreen({ navigation, currentUser }) {
     return (
         <View style={styles.container}>
             <Header 
-                title='Tất cả đơn hàng' 
+                title='Đơn hàng' 
                 onPress={() => navigation.goBack()}
             />
             <View style={styles.tabContainer}>

@@ -25,7 +25,7 @@ export default function Category({
                 </View>
                 <Text 
                     customStyle={[styles.categoryTitle, customTitleStyle]}
-                    numberOfLines={1}
+                    numberOfLines={2}
                 >
                     {title}
                 </Text>
@@ -37,8 +37,7 @@ export default function Category({
 const styles = StyleSheet.create({    
     container: {
         alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 5,
+        marginTop: 5
     },
     iconContainer: {
         width: 70, 

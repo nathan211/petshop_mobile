@@ -1,8 +1,13 @@
-import React from 'react'
-import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native'
+import React from 'react';
+import { 
+    StyleSheet, 
+    View, 
+    Image, 
+    TouchableWithoutFeedback } from 'react-native';
 
-import colors from '../config/colors'
-import Text from './Text'
+import colors from '../config/colors';
+import Text from './Text';
+import UrlContstants from '../contstants/UrlContstant';
 
 export default function Card({ 
         title, 
@@ -15,7 +20,7 @@ export default function Card({
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, customContainerStyle]}>
-                    <Image style={styles.image} source={{ uri: 'http://192.168.1.41:5000' + imageUrl }} />
+                    <Image style={styles.image} source={{ uri: UrlContstants.HOSTING + imageUrl }} />
                     <View style={[styles.titleContainer, customTitleContainerStyle]}>
                         <Text numberOfLines={2} customStyle={[styles.title, customTitleStyle]}>{title}</Text>
                         <Text numberOfLines={1} customStyle={styles.subTitle}>{subTitle}</Text>

@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Text from '../components/Text';
 import comboApi from '../api/combo';
 import numberFormatter from '../utilities/numberFormatter';
+import UrlContstants from '../contstants/UrlContstant';
 
 export default function BookedDetailsScreen({ navigation, route }) {
     const { comboId, bookedDate, bookedTime } = route.params;
@@ -44,7 +45,7 @@ export default function BookedDetailsScreen({ navigation, route }) {
                         <View style={styles.booking}>
                             <Image 
                                 style={styles.image} 
-                                source={{ uri: 'http://192.168.1.41:5000' + combo.imageUrl }} 
+                                source={{ uri: UrlContstants.HOSTING + combo.imageUrl }} 
                             />
                             <View style={styles.titleContainer}>
                                 <Text style={styles.name}>{ combo.name }</Text>

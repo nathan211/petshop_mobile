@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
-import ActivityIndicator from '../components/AcitvityIndicator';
 import AppNavigator from '../navigation/AppNavigator';
 import AuthNavigator from '../navigation/AuthNavigator';
 import navigationTheme from '../navigation/navigationTheme';
@@ -36,7 +35,11 @@ function Root({ currentUser, signIn }) {
     } 
 
     if(isLoading){
-        return <ActivityIndicator />
+        return (
+            <View style={styles.activityContainer}>
+                <ActivityIndicator size="large" color="#FF7979" />
+            </View>
+        )
     }
  
     return (
@@ -56,6 +59,12 @@ const mapDispatch = {
     signIn,
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    activityContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    }
+})
 
 export default connect(mapStateToProps, mapDispatch)(Root)

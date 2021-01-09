@@ -26,6 +26,7 @@ export default function CategoryScreen({ navigation, route }) {
         { label:'Thấp đến cao', value: 1},
         { label:'Cao đến thấp', value: 2}
     ]);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         getFilteredProductsByCategory();
@@ -33,7 +34,7 @@ export default function CategoryScreen({ navigation, route }) {
 
     const getFilteredProductsByCategory = async () => {
         try {
-            const result = await productApi.getFilteredProductsByCategory(route.params);
+            const result = await productApi.getFilteredProductsByCategory(currentPage, route.params);
             if(result.ok){
                 setListOfProducts(result.data);
             }
@@ -74,6 +75,13 @@ export default function CategoryScreen({ navigation, route }) {
 
     const handleUnchosen = () => {
         setIsSelected(null);
+    }
+
+    const handleLoadMore = async () => {
+        const result = await productApi.getFilteredProductsByCategory(currentPage + 1, route.params);
+        
+        setCurrentPage(currentPage + 1);
+        setListOfProducts([...listOfProducts, ...result.data]);
     }
 
     return (
@@ -141,6 +149,8 @@ export default function CategoryScreen({ navigation, route }) {
                     );
                 }}
                 numColumns={2}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.5}
             />
                 
             <Modal
@@ -214,7 +224,7 @@ const styles = StyleSheet.create({
     container: {},
     cardContainer: {
         paddingHorizontal: 20,
-        marginBottom: 70,
+        marginBottom: 110,
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
