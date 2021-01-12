@@ -37,6 +37,7 @@ export default function BookingDetails({ navigation, route }) {
             if(result.ok){
                 createAlert();
                 renderSelectedDate(selectedDate);
+                setIsSelected(null);
             } 
         } catch (error) {
             console.log(error.message);
@@ -69,17 +70,25 @@ export default function BookingDetails({ navigation, route }) {
     
     const handleDatePicked = async date => {
         setTime([]);
+
+        
         const output = moment(date).format('DD/MM/YYYY');
         setSelectedDate(output);
-
+        
         await bookingApi.findSelectedDate(output).then(result => {
             const timeClone = result.data.map(item => {
                 return item.bookedTime;
             });
             setTime(timeClone);
         });
-
-        setIsSelected(0);
+        
+        const dateOne = new Date(); //Year, Month, Date    
+        const dateTwo = date; //Year, Month, Date    
+        if (dateOne > dateTwo) {    
+            setTime(bookingTime);   
+        }   
+        
+        setIsSelected(null);
         hideDateTimePicker();
     };
 

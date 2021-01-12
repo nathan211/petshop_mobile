@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import colors from '../config/colors';
 import Text from '../components/Text';
 import numberFormatter from '../utilities/numberFormatter';
+import UrlContstants from '../contstants/UrlContstant';
 
 export default function CartItem({ 
     name, 
@@ -12,16 +13,23 @@ export default function CartItem({
     price,
     onDecrease,
     onIncrease,
-    onRightAction}) {
+    onRightAction,
+    imageUrl,}) {
+
     return (
         <TouchableWithoutFeedback onPress={() => console.log('go to details')}>
             <View style={styles.container}>
                 <Image 
                     style={styles.image}
-                    source={require('../assets/images/product.jpg')} 
+                    source={{ uri: UrlContstants.HOSTING + imageUrl }} 
                 />
                 <View style={styles.nameContainer}>
-                    <Text>{ name }</Text>
+                    <Text 
+                        customStyle={styles.name}
+                        numberOfLines={2}
+                    >
+                        { name }
+                    </Text>
                     <Text customStyle={styles.price}>{ numberFormatter(price) + ' ₫' }</Text>
                     <View style={styles.counterContainer}>
                         <Button 
@@ -85,5 +93,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         color: colors.red,
+    },
+    name: {
+        fontSize: 16
     }
 })

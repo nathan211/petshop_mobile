@@ -40,7 +40,6 @@ function ShoppingCartScreen({
 
     const [modalVisible, setModalVisible] = useState(false);
     const [updateInformationFailed, setUpdateInformationFailed] = useState(false);
-    const [updateInformationSuccessed, setUpdateInformationSuccessed] = useState(false);
 
     const handleRequestModal = () => {
         setModalVisible(!modalVisible);
@@ -120,6 +119,7 @@ function ShoppingCartScreen({
                                 cartCounter={item.cartCounter}
                                 onDecrease={() => decreaseHandler(item._id)}
                                 onIncrease={() => increaseHandler(item._id)}
+                                imageUrl={item.imageUrl}
                             />
                         );
                     }) 
@@ -348,7 +348,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatch = {
-
+    decreaseHandler,
+    increaseHandler
 }
 
 export default connect(mapStateToProps, mapDispatch)(ShoppingCartScreen)

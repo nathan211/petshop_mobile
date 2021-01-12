@@ -79,6 +79,7 @@ function OrderScreen({
                                 name={item.name} 
                                 price={numberFormatter(item.price)+ ' ₫'} 
                                 cartCounter={'x' + item.cartCounter}
+                                imageUrl={item.imageUrl}
                             />
                         );
                     }) 

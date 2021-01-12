@@ -85,6 +85,7 @@ function OrderDetailsScreen({ navigation, route }) {
                             price={numberFormatter(item.product.price) + ' ₫'} 
                             cartCounter={'Số lượng: ' + item.amount}
                             key={item.product._id}
+                            imageUrl={item.product.imageUrl}
                         />
                     ))
                 }

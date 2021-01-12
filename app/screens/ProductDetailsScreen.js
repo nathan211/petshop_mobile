@@ -16,9 +16,10 @@ import ShoppingCart from '../components/ShoppingCart';
 import Text from '../components/Text';
 import { addToCart } from '../redux/shoppingCartSlice';
 import numberFormatter from '../utilities/numberFormatter';
+import UrlContstants from '../contstants/UrlContstant';
 
 function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
-    const { name, price, quantity, description } = route.params;
+    const { name, price, quantity, description, imageUrl } = route.params;
     
     const handleAddToCart = () => {
         const product = route.params;
@@ -68,7 +69,7 @@ function ProductDetailsScreen({ route, navigation, addToCart, cartItems }) {
             </View>
             <ScrollView style={styles.productContainer}>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={require('../assets/images/product.jpg')} />
+                    <Image style={styles.image} source={{ uri: UrlContstants.HOSTING + imageUrl }} />
                 </View>
                 <View style={styles.titleContainer}>
                     <Text 

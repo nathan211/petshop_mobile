@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import colors from '../config/colors';
 import Text from '../components/Text';
+import UrlContstants from '../contstants/UrlContstant';
 
 export default function CartItem({ 
     name, 
@@ -12,13 +13,14 @@ export default function CartItem({
     price, 
     details, 
     onRightAction,
-    onPress}) {
+    onPress,
+    imageUrl}) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={styles.container}>
                 <Image 
                     style={styles.image}
-                    source={require('../assets/images/product.jpg')} 
+                    source={{ uri: UrlContstants.HOSTING + imageUrl }} 
                     resizeMode='contain'
                 />
                 <View style={styles.infoContainer}>

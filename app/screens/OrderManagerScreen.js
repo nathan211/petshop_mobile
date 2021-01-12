@@ -108,6 +108,7 @@ function OrderManagerScreen({ navigation, currentUser }) {
                                 onPress={() => navigation.navigate('OrderDetails', item.order) }
                                 customNameStyle={styles.name}
                                 key={item.order._id}
+                                imageUrl={item.imageUrl}
                             />
                         ))
                     }
@@ -122,7 +123,8 @@ const styles = StyleSheet.create({
     },
     orderContainer: {
         padding: 10,
-        marginBottom: 50,
+        paddingTop: 0,
+        marginBottom: 90,
     },
     name: {
         fontSize: 14
