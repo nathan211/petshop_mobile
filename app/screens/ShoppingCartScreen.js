@@ -1,7 +1,15 @@
-import React from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useState } from 'react';
+import { 
+    StyleSheet, 
+    View, 
+    TouchableWithoutFeedback, 
+    ScrollView,
+    Modal,
+    TouchableOpacity,
+    Alert } from 'react-native';
 import { connect } from 'react-redux';
+import * as Yup from 'yup';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Button from '../components/Button';
 import colors from '../config/colors';
@@ -9,13 +17,63 @@ import CartItem from '../components/CartItem';
 import Text from '../components/Text';
 import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
 import numberFormatter from '../utilities/numberFormatter';
+import { 
+    Form, 
+    FormField,
+    SubmitButton,
+    ErrorMessage, 
+} from '../components/forms';
+import customerApi from '../api/customer';
+
+const validationSchemaUpdateInfomation = Yup.object().shape({
+    address: Yup.string().required('Bạn chưa nhập địa chỉ'),
+    phoneNumber: Yup.string().required('Bạn chưa nhập số điện thoại'),
+});
 
 function ShoppingCartScreen({ 
     navigation, 
     cartItems, 
     decreaseHandler, 
     increaseHandler,
-    totalMoney }) {
+    totalMoney,
+    currentUser }) {
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [updateInformationFailed, setUpdateInformationFailed] = useState(false);
+    const [updateInformationSuccessed, setUpdateInformationSuccessed] = useState(false);
+
+    const handleRequestModal = () => {
+        setModalVisible(!modalVisible);
+    }
+
+    const handleSubmit = async ({ address, phoneNumber }) => {
+        try {
+            const result = await customerApi.updateShippingInformation(currentUser._id, address, phoneNumber);
+
+            if(result.ok){
+                createAlert();
+            } else {
+                setUpdatePasswordFailed(true);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    const createAlert = () =>
+    Alert.alert(
+      "Thông báo!",
+      "Cập nhật thành công.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: handleRequestModal}
+      ],
+      { cancelable: false }
+    );
 
     return (
         <View style={styles.container}>
@@ -42,12 +100,12 @@ function ShoppingCartScreen({
                 <View style={styles.addressContainer}>
                     <View style={styles.addressWrapper}>
                         <Text customStyle={styles.addressTitle}>Địa chỉ giao hàng</Text>
-                        <Text customStyle={styles.name}>Nguyễn Việt Phi - 0962104912</Text>
-                        <Text customStyle={styles.address}>Somewhere in Vietnam</Text>
+                        <Text customStyle={styles.name}>{ currentUser.fullName + ' - ' + currentUser.phoneNumber }</Text>
+                        <Text customStyle={styles.address}>{ currentUser.address }</Text>
                     </View>
                     <TouchableWithoutFeedback 
                         style={styles.deleteContainer}
-                        onPress={() => console.log('delete')}
+                        onPress={handleRequestModal}
                     >
                         <Text customStyle={styles.delete}>Sửa</Text>
                     </TouchableWithoutFeedback>
@@ -80,13 +138,92 @@ function ShoppingCartScreen({
                     onPress={() => navigation.navigate('Order')}
                 />
             </View>
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={handleRequestModal}
+            >
+                <TouchableOpacity 
+                    activeOpacity={1} 
+                    onPressOut={handleRequestModal}
+                >
+                    <View style={styles.modalContainer}>
+                    <View style={styles.modalHeader}>
+                        <TouchableWithoutFeedback onPress={handleRequestModal}>
+                            <View style={styles.closeModalIcon}>
+                                <Icon
+                                    name='arrow-left'
+                                    size={25}
+                                    color={colors.white}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <View style={styles.modalHeaderTitleContainer}>
+                            <Text customStyle={styles.modalHeaderTitle}>Cập nhật thông tin</Text>
+                        </View>
+                    </View>
+                    <View style={styles.inputContainer}>
+                            <Form
+                                initialValues={{
+                                    address: currentUser.address,
+                                    phoneNumber: currentUser.phoneNumber,
+                                }}
+                                validationShema={validationSchemaUpdateInfomation}
+                                onSubmit={handleSubmit}
+                            >
+                                <ErrorMessage 
+                                    visible={updateInformationFailed}
+                                    error="Cập nhật không thành công!"
+                                />
+                                <FormField 
+                                    autoCorrect={false}
+                                    autoCapitalize='none'
+                                    icon='address-book'
+                                    name='address'
+                                    placeholder='Địa chỉ'
+                                    customContainerStyle={styles.customInputContainer}
+                                    customInputStyle={styles.customInput}
+                                    placeholderTextColor={colors.medium} 
+                                    iconColor={colors.medium}
+                                    multiline
+                                />
+                                <FormField 
+                                    autoCorrect={false}
+                                    autoCapitalize='none'
+                                    icon='phone'
+                                    name='phoneNumber'
+                                    placeholder='Số điện thoại'
+                                    keyboardType='numeric'
+                                    customContainerStyle={styles.customInputContainer}
+                                    customInputStyle={styles.customInput}
+                                    placeholderTextColor={colors.medium}
+                                    iconColor={colors.medium} 
+                                />
+                                <SubmitButton 
+                                    title='Cập nhật' 
+                                    customTitleStyle={styles.customButtonTitle}
+                                    color='brown'
+                                    customTitleStyle={styles.customButtonTitle}
+                                />
+                            </Form>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            </Modal>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    buttonContainer: {
+        padding: 5,
+    },
     container: {
         flex: 1
+    },
+    closeModalIcon: {
+        marginLeft: 10
     },
     addressContainer: {
         backgroundColor: colors.white,
@@ -104,6 +241,14 @@ const styles = StyleSheet.create({
     },
     addressWrapper: {
         flex: 1
+    },
+    customInput: {
+        fontSize: 16,
+    },
+    customInputContainer: {
+        borderWidth: 0,
+        backgroundColor: colors.white,
+        borderRadius: 10,
     },
     customButtonTitle: {
         color: colors.white
@@ -139,6 +284,11 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 5,
     },
+    inputContainer: {
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 10
+    },
     iconBackContainer: {
         marginLeft: 5,
         width: '10%'
@@ -158,19 +308,47 @@ const styles = StyleSheet.create({
     total: {
         fontWeight: 'bold',
         color: colors.red
+    },
+    modalContainer: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: colors.lightPink,
+        alignSelf: 'flex-end',
+        marginTop: 55,
+        elevation: 10,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        overflow: 'hidden'
+    },
+    modalHeader: {
+        flexDirection: 'row',
+        padding: 5,
+        backgroundColor: colors.pink,
+    },
+    modalHeaderTitleContainer: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    modalHeaderTitle: {
+        color: colors.white,
+    },
+    filterTitle: {
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginLeft: 10,
     }
 })
 
 const mapStateToProps = state => {
     return {
         cartItems: state.cart.cartItems,
-        totalMoney: state.cart.totalMoney
+        totalMoney: state.cart.totalMoney,
+        currentUser: state.auth.currentUser
     }
 }
 
 const mapDispatch = {
-    decreaseHandler,
-    increaseHandler,
+
 }
 
 export default connect(mapStateToProps, mapDispatch)(ShoppingCartScreen)

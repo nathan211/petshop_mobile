@@ -10,9 +10,12 @@ const getSortedProductsLowToHigh = () => client.get('/products/lowToHigh');
 
 const getSortedProductsHighToLow = () => client.get('products/highToLow');
 
+const search = (searchTerm) => client.post('/products/search', { searchTerm });
+
 export default {
     getListOfProducts,
     getFilteredProductsByCategory,
     getSortedProductsLowToHigh,
     getSortedProductsHighToLow,
+    search,
 };

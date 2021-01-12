@@ -44,6 +44,17 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
         try {
             const result = await customerApi.updateUserInformation(currentUser._id, fullName, address, phoneNumber, email);
             if(result.ok){
+                const updatedCustomer = {
+                    ...currentUser
+                };
+                
+                updatedCustomer.fullName = fullName;
+                updatedCustomer.address = address;
+                updatedCustomer.phoneNumber = phoneNumber;
+                updatedCustomer.email = email;
+
+                console.log(updatedCustomer);
+
                 createAlert();
             } else {
                 setUpdateInformationFailed(true);
@@ -214,6 +225,7 @@ function ProfileEditScreen({ navigation, currentUser, signOut }) {
                                     customInputStyle={styles.customInput}
                                     placeholderTextColor={colors.medium} 
                                     iconColor={colors.medium}
+                                    multiline
                                 />
                                 <FormField 
                                     autoCorrect={false}

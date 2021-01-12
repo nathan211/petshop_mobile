@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import colors from '../config/colors'
 import TextInput from './TextInput'
 
-export default function SearchBar({customStyle}) {
+export default function SearchBar({ customStyle, onSubmitEditing, onChangeText }) {
     return (
         <View style={[styles.container, customStyle]}>
             <TextInput 
@@ -14,6 +14,8 @@ export default function SearchBar({customStyle}) {
                 placeholderTextColor={colors.medium}
                 customContainerStyle={styles.customContainerStyle}
                 customInputStyle={styles.customInputStyle}
+                onSubmitEditing={onSubmitEditing}
+                onChangeText={onChangeText}
             />
         </View>
     )

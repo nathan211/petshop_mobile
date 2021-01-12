@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import AccountNavigator from '../navigation/AccountNavigator';
 import BookingNavigator from '../navigation/BookingNavigator';
-import SearchScreen from '../screens/SearchScreen';
+import SearchNavigator from '../navigation/SearchNavigator';
 import HomeNavigator from './HomeNavigator';
 import CategoryNavigator from './CategoryNavigator';
 
@@ -44,7 +44,7 @@ export default function AppNavigator() {
             />
             <Tab.Screen
                 name='Search'
-                component={SearchScreen}
+                component={SearchNavigator}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon 

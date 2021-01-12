@@ -1,3 +1,3 @@
 export default {
-    HOSTING: 'http://10.13.25.21:5000',
+    HOSTING: 'http://192.168.0.114:5000',
 }

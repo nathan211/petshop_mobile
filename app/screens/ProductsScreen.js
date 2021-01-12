@@ -28,8 +28,13 @@ export default function CategoryScreen({ navigation, route }) {
     ]);
     const [currentPage, setCurrentPage] = useState(1);
 
+    
     useEffect(() => {
-        getFilteredProductsByCategory();
+        if(Array.isArray(route.params)){
+            setListOfProducts(route.params);
+        } else {
+            getFilteredProductsByCategory();
+        }
     }, []);
 
     const getFilteredProductsByCategory = async () => {
@@ -113,24 +118,6 @@ export default function CategoryScreen({ navigation, route }) {
                     </View>
                 </TouchableWithoutFeedback>
             </View>
-            {/* <ScrollView>
-                <View  style={styles.cardContainer}>
-                {
-                    listOfProducts.map((item) => (
-                        <Card 
-                            title={item.name}
-                            subTitle={numberFormatter(item.price) + ' ₫'} 
-                            onPress={() => navigation.navigate('ProductDetails', item)}
-                            customContainerStyle={styles.customCardContainer}
-                            customTitleStyle={styles.customCardTitle}
-                            imageUrl={item.imageUrl}
-                            key={item._id}
-                        />
-                    ))
-                }
-                   
-                </View>
-            </ScrollView> */}
             <FlatList 
                 style={styles.cardContainer}
                 data={listOfProducts}
