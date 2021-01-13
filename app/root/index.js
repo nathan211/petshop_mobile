@@ -30,7 +30,7 @@ function Root({ currentUser, signIn }) {
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
-            console.log(error);
+            console.log(error.message);
         }
     } 
 

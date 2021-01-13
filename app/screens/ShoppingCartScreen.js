@@ -59,6 +59,13 @@ function ShoppingCartScreen({
         }
     }
 
+    const handleSubmitOrder = () => {
+        if(cartItems.length <= 0){
+            return;
+        }
+        navigation.navigate('Order');
+    }
+
     const createAlert = () =>
     Alert.alert(
       "Thông báo!",
@@ -93,7 +100,7 @@ function ShoppingCartScreen({
                     textAlign: 'center',
                     paddingRight: 80,
                     color: colors.white,
-                }}>Giỏ hàng({cartItems.length})</Text>
+                }}>Giỏ hàng({cartItems.length === 0 ? 0 : cartItems.length})</Text>
             </View>
             <ScrollView style={styles.cartContainer}>
                 <View style={styles.addressContainer}>
@@ -110,6 +117,7 @@ function ShoppingCartScreen({
                     </TouchableWithoutFeedback>
                 </View>
                 { 
+                    cartItems.length > 0 ?
                     cartItems.map(item => {
                         return (
                             <CartItem 
@@ -122,7 +130,7 @@ function ShoppingCartScreen({
                                 imageUrl={item.imageUrl}
                             />
                         );
-                    }) 
+                    }) : null
                 }
             </ScrollView>
             <View style={styles.orderContainer}>
@@ -135,7 +143,7 @@ function ShoppingCartScreen({
                     color='brown'
                     customTitleStyle={styles.customButtonTitle}
                     customContainerStyle={styles.customButtonContainer}
-                    onPress={() => navigation.navigate('Order')}
+                    onPress={handleSubmitOrder}
                 />
             </View>
             <Modal
