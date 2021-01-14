@@ -15,7 +15,10 @@ import Button from '../components/Button';
 import colors from '../config/colors';
 import CartItem from '../components/CartItem';
 import Text from '../components/Text';
-import { decreaseHandler, increaseHandler } from '../redux/shoppingCartSlice';
+import { 
+    decreaseHandler, 
+    increaseHandler, 
+    deleteHandler, } from '../redux/shoppingCartSlice';
 import numberFormatter from '../utilities/numberFormatter';
 import { 
     Form, 
@@ -35,6 +38,7 @@ function ShoppingCartScreen({
     cartItems, 
     decreaseHandler, 
     increaseHandler,
+    deleteHandler,
     totalMoney,
     currentUser }) {
 
@@ -127,6 +131,7 @@ function ShoppingCartScreen({
                                 cartCounter={item.cartCounter}
                                 onDecrease={() => decreaseHandler(item._id)}
                                 onIncrease={() => increaseHandler(item._id)}
+                                onRightAction={() => deleteHandler(item)}
                                 imageUrl={item.imageUrl}
                             />
                         );
@@ -357,7 +362,8 @@ const mapStateToProps = state => {
 
 const mapDispatch = {
     decreaseHandler,
-    increaseHandler
+    increaseHandler,
+    deleteHandler,
 }
 
 export default connect(mapStateToProps, mapDispatch)(ShoppingCartScreen)
