@@ -1,4 +1,14 @@
-# Installation
+## Installation
+
+```bash
+yarn
+```
+
+## Run
+
+```bash
+yarn run android
+```
 
 # Overview
 <p float="left">
