@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
         width: '10%'
     },
     customCardContainer: {
-        width: 175,
+        width: 150,
         height: 250,    
         elevation: 0,
         marginVertical: 5,

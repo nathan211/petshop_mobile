@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     customContainerCard: {
-        width: 90,
+        width: 70,
         height: 100,
         elevation: 0,
     },

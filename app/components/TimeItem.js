@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     timeItemSelected: {
         backgroundColor: colors.secondary,
         color: colors.white,
-        width: 65,
+        width: 70,
         height: 35,
         textAlign: 'center',
         padding: 5,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     timeItem: {
         backgroundColor: colors.lightPink,
-        width: 65,
+        width: 70,
         height: 35,
         textAlign: 'center',
         padding: 5,
